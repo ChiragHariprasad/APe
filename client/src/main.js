@@ -139,7 +139,6 @@ if (window.location.pathname === '/auth-callback') {
   const error = params.get('error');
 
   if (error) {
-    window.history.replaceState({}, '', '/');
     renderLoginPage(app);
   } else if (token) {
     api.setToken(token);
@@ -153,7 +152,8 @@ if (window.location.pathname === '/auth-callback') {
       } else {
         navigate('dashboard');
       }
-    }).catch(() => {
+    }).catch((err) => {
+      alert("Failed to connect to backend API! \\nError: " + err.message + "\\nAPI URL: " + import.meta.env.VITE_API_URL);
       navigate('login');
     });
   } else {
