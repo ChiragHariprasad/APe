@@ -3,7 +3,7 @@
  * Wraps fetch with auth token injection, error handling, and base URL configuration.
  */
 
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 function getToken() {
   return localStorage.getItem('ape_token');
