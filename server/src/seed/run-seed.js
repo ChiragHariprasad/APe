@@ -13,7 +13,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 async function runSeed() {
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.NEON_DATABASE_URL || process.env.DATABASE_URL,
   });
 
   try {
