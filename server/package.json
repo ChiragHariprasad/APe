@@ -1,0 +1,25 @@
+{
+  "name": "ape-survey-server",
+  "version": "1.0.0",
+  "description": "APE Survey Collection API Server",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "seed": "node src/seed/run-seed.js",
+    "db:init": "node src/seed/init-db.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "google-auth-library": "^9.14.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.0",
+    "uuid": "^10.0.0"
+  }
+}

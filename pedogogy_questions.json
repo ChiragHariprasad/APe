@@ -1,0 +1,162 @@
+{
+  "P01": {
+    "name": "Explicit & Transmission Learning",
+    "success_criterion": "Students understand because instruction is clear and structured.",
+    "questions": [
+      "The instructor explained concepts in a clear and understandable manner.",
+      "The step-by-step explanations helped me learn effectively.",
+      "Worked examples improved my understanding of difficult topics.",
+      "The course content was presented in a logical sequence.",
+      "Instructor demonstrations helped me apply concepts correctly.",
+      "I rarely felt confused about what was expected of me.",
+      "The amount of guidance provided was appropriate.",
+      "Direct explanations helped me learn more efficiently than self-exploration.",
+      "Feedback helped me correct misunderstandings quickly.",
+      "This teaching approach helped me achieve the learning objectives."
+    ]
+  },
+  "P02": {
+    "name": "Discovery-Based Learning",
+    "success_criterion": "Students construct understanding through exploration.",
+    "questions": [
+      "I had sufficient opportunities to explore concepts independently.",
+      "Discovering solutions myself improved my understanding.",
+      "Exploration activities increased my curiosity about the subject.",
+      "I was encouraged to investigate multiple possible solutions.",
+      "The learning activities helped me identify patterns and relationships.",
+      "I felt comfortable experimenting with different approaches.",
+      "Independent exploration improved my confidence in the subject.",
+      "I was able to derive meaningful conclusions from my investigations.",
+      "The level of instructor guidance supported exploration without limiting it.",
+      "This teaching approach helped me achieve the learning objectives."
+    ]
+  },
+  "P03": {
+    "name": "Active Engagement Learning",
+    "success_criterion": "Students actively participate instead of passively receiving information.",
+    "questions": [
+      "I actively participated during class activities.",
+      "Interactive activities improved my understanding of the content.",
+      "The course encouraged me to think critically during class.",
+      "Learning activities kept me engaged throughout the session.",
+      "I regularly applied concepts rather than only listening to explanations.",
+      "Class participation helped reinforce key concepts.",
+      "The activities encouraged me to contribute my ideas.",
+      "Active participation improved my retention of the material.",
+      "The balance between instruction and activities was appropriate.",
+      "This teaching approach helped me achieve the learning objectives."
+    ]
+  },
+  "P04": {
+    "name": "Social Constructivist Learning",
+    "success_criterion": "Learning occurs through social interaction and discussion.",
+    "questions": [
+      "Discussions with classmates improved my understanding.",
+      "Group activities helped me learn concepts more effectively.",
+      "I benefited from hearing different perspectives.",
+      "Collaborative learning encouraged deeper thinking.",
+      "My peers contributed positively to my learning experience.",
+      "I felt comfortable sharing ideas during discussions.",
+      "Working with others improved my problem-solving abilities.",
+      "Peer interactions clarified concepts I initially struggled with.",
+      "Group activities were meaningful and productive.",
+      "This teaching approach helped me achieve the learning objectives."
+    ]
+  },
+  "P05": {
+    "name": "Mastery / Competency-Based Learning",
+    "success_criterion": "Students achieve competency before progressing.",
+    "questions": [
+      "The learning objectives were clearly defined.",
+      "I understood the performance standards expected of me.",
+      "Assessments accurately measured my understanding.",
+      "Feedback clearly identified areas for improvement.",
+      "I had opportunities to improve after making mistakes.",
+      "Progression through the course felt based on understanding rather than completion.",
+      "I was confident in my understanding before moving to new topics.",
+      "The competency expectations motivated me to improve.",
+      "The course helped me identify specific skill gaps.",
+      "This teaching approach helped me achieve the learning objectives."
+    ]
+  },
+  "P06": {
+    "name": "Problem & Project Based Learning",
+    "success_criterion": "Students learn through solving authentic problems.",
+    "questions": [
+      "Real-world problems increased my interest in the subject.",
+      "Project work helped me connect theory to practice.",
+      "The problems were relevant to real-world situations.",
+      "Solving complex problems improved my understanding.",
+      "The project required meaningful application of concepts.",
+      "I developed problem-solving skills through project activities.",
+      "The project encouraged independent research and learning.",
+      "The project outcomes felt meaningful and useful.",
+      "The workload associated with projects was appropriate.",
+      "This teaching approach helped me achieve the learning objectives."
+    ]
+  },
+  "P07": {
+    "name": "Inquiry-Based Learning",
+    "success_criterion": "Students investigate questions and evidence systematically.",
+    "questions": [
+      "The course encouraged me to ask meaningful questions.",
+      "Investigating evidence improved my understanding.",
+      "I was encouraged to form and test hypotheses.",
+      "Inquiry activities improved my analytical thinking.",
+      "Data collection and analysis contributed to my learning.",
+      "I felt ownership of the investigation process.",
+      "The inquiry tasks stimulated my curiosity.",
+      "I developed stronger critical-thinking skills through inquiry activities.",
+      "The instructor provided appropriate support during investigations.",
+      "This teaching approach helped me achieve the learning objectives."
+    ]
+  },
+  "P08": {
+    "name": "Flipped Classroom",
+    "success_criterion": "Pre-class learning enables effective in-class application.",
+    "questions": [
+      "Pre-class materials prepared me for classroom activities.",
+      "The assigned videos/readings were useful and relevant.",
+      "I regularly reviewed the pre-class materials before class.",
+      "In-class activities reinforced concepts learned beforehand.",
+      "Class time was used effectively for application and discussion.",
+      "The flipped format encouraged me to take responsibility for learning.",
+      "I arrived better prepared for class because of the pre-class content.",
+      "The balance between pre-class and in-class work was appropriate.",
+      "The flipped structure improved my learning experience.",
+      "This teaching approach helped me achieve the learning objectives."
+    ]
+  },
+  "P09": {
+    "name": "Reflective & Metacognitive Learning",
+    "success_criterion": "Students monitor and improve their own learning.",
+    "questions": [
+      "Reflection activities helped me understand how I learn.",
+      "I became more aware of my strengths and weaknesses.",
+      "Reflection helped identify gaps in my understanding.",
+      "I regularly evaluated my learning progress.",
+      "Self-assessment improved my learning decisions.",
+      "Reflection encouraged deeper thinking about the subject.",
+      "I adjusted my learning strategies based on reflection.",
+      "Reflection activities improved my confidence as a learner.",
+      "Reflective exercises contributed positively to my performance.",
+      "This teaching approach helped me achieve the learning objectives."
+    ]
+  },
+  "P10": {
+    "name": "Technology-Integrated Learning",
+    "success_criterion": "Technology meaningfully enhances learning.",
+    "questions": [
+      "The technology tools improved my understanding of course concepts.",
+      "Digital resources made learning more accessible.",
+      "Interactive tools helped me visualize complex concepts.",
+      "Technology increased my engagement with the course.",
+      "The technology used was relevant to the learning objectives.",
+      "Digital feedback tools helped improve my performance.",
+      "Technology made learning more efficient.",
+      "The tools were easy to use and supported learning effectively.",
+      "Technology enhanced my ability to solve problems and complete tasks.",
+      "This teaching approach helped me achieve the learning objectives."
+    ]
+  }
+}

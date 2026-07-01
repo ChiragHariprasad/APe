@@ -1,0 +1,14 @@
+1.txt
+*/.env
+*/node_modules
+*node_modules/*
+# Ignore node_modules anywhere in the repository
+**/node_modules/
+
+# Environment files anywhere
+**/.env
+**/.env.*
+
+**/.env
+**/.env.*
+**/node_modules/

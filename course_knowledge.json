@@ -1,0 +1,345 @@
+{
+  "2022": {
+    "semester_7": {
+      "HS451TA": {
+        "subject": "Professional Elective / Program Core",
+        "faculty": [],
+        "pedagogy": "P01"
+      },
+      "AI472IA": {
+        "subject": "Professional Elective",
+        "faculty": [],
+        "pedagogy": "P03"
+      },
+      "AI473IA": {
+        "subject": "Professional Elective",
+        "faculty": [],
+        "pedagogy": "P03"
+      },
+      "AI474P": {
+        "subject": "Major Project Phase I",
+        "faculty": [
+          "Prof. Rajesh RM"
+        ],
+        "pedagogy": "P06"
+      }
+    },
+    "semester_8": {
+      "AI481P": {
+        "subject": "Major Project Phase II / Internship",
+        "faculty": [
+          "Prof. Rajesh RM"
+        ],
+        "pedagogy": "P06"
+      }
+    }
+  },
+  "2023": {
+    "semester_3": {
+      "MAT231ET": {
+        "subject": "Mathematics for Artificial Intelligence & Machine Learning",
+        "faculty": [
+          "Dr. T. Prasanna Kumar",
+          "Dr. Sowmya M"
+        ],
+        "pedagogy": "P01"
+      },
+      "AI233AI": {
+        "subject": "Fundamentals of Data Structures and Data Analysis",
+        "faculty": [
+          "Prof. Rajesh RM",
+          "Prof. S. Anupama Kumar"
+        ],
+        "pedagogy": "P03"
+      },
+      "AI234AI": {
+        "subject": "Foundations of Cyber Physical Systems",
+        "faculty": [
+          "Prof. K. Vishwavardhan Reddy",
+          "Prof. Somesh Nandi"
+        ],
+        "pedagogy": "P01"
+      },
+      "AI235AT": {
+        "subject": "Statistics for Data Science",
+        "faculty": [
+          "Dr. Arulalan Rajan"
+        ],
+        "pedagogy": "P04"
+      },
+      "AI237DL": {
+        "subject": "Design Thinking Lab",
+        "faculty": [
+          "Prof. B. Sathish Babu",
+          "Prof. Vijayalakshmi M. N."
+        ],
+        "pedagogy": "P06"
+      }
+    },
+    "semester_4": {
+      "CS241AT": {
+        "subject": "Discrete Mathematical Structures and Combinatorics",
+        "faculty": [
+          "Dr. Suma N. Manjunath",
+          "Dr. Satish V. M."
+        ],
+        "pedagogy": "P01"
+      },
+      "CD343AI": {
+        "subject": "Design and Analysis of Algorithms",
+        "faculty": [
+          "Prof. Rajesh RM",
+          "Prof. S. Anupama Kumar"
+        ],
+        "pedagogy": "P05"
+      },
+      "AI244AI": {
+        "subject": "Artificial Intelligence and Machine Learning",
+        "faculty": [
+          "Prof. Somesh Nandi",
+          "Prof. K. Vishwavardhan Reddy"
+        ],
+        "pedagogy": "P03"
+      },
+      "CY245AT": {
+        "subject": "Computer Networks",
+        "faculty": [
+          "Prof. K. Vishwavardhan Reddy",
+          "Prof. Narasimha Swamy S"
+        ],
+        "pedagogy": "P01"
+      },
+      "HS248AT": {
+        "subject": "Universal Human Values",
+        "faculty": [
+          "Prof. B. Sathish Babu",
+          "Prof. Vijayalakshmi M. N."
+        ],
+        "pedagogy": "P10"
+      }
+    },
+    "semester_5": {
+      "HS251TA": {
+        "subject": "Principles of Management and Economics",
+        "faculty": [
+          "Prof. Nandini",
+          "Prof. Rajkumar G. R."
+        ],
+        "pedagogy": "P01"
+      },
+      "CD252IA": {
+        "subject": "Database Management Systems",
+        "faculty": [
+          "Prof. Harshitha V",
+          "Prof. Vijayalakshmi M. N."
+        ],
+        "pedagogy": "P05"
+      },
+      "AI253IA": {
+        "subject": "Artificial Neural Networks and Deep Learning",
+        "faculty": [
+          "Prof. Somesh Nandi",
+          "Prof. K. Vishwavardhan Reddy"
+        ],
+        "pedagogy": "P03"
+      },
+      "AI254TA": {
+        "subject": "Machine Learning Operations",
+        "faculty": [
+          "Prof. Manasa M",
+          "Prof. Anupama Kumar"
+        ],
+        "pedagogy": "P10"
+      },
+      "AI255TBA": {
+        "subject": "Artificial Intelligence Integrated Software Engineering",
+        "faculty": [
+          "Prof. Narasimha Swamy S"
+        ],
+        "pedagogy": "P01"
+      },
+      "AI255TBC": {
+        "subject": "Mathematical Algorithms for Artificial Intelligence",
+        "faculty": [
+          "Dr. Arulalan Rajan"
+        ],
+        "pedagogy": "P01"
+      }
+    },
+    "semester_6": {
+      "HS361TA": {
+        "subject": "Entrepreneurship and Intellectual Property Rights",
+        "faculty": [
+          "Prof. Vikram B",
+          "Prof. Nandini B"
+        ],
+        "pedagogy": "P01"
+      },
+      "AI362IA": {
+        "subject": "Big Data Technologies",
+        "faculty": [
+          "Prof. Narasimha Swamy S",
+          "Prof. Harshitha V"
+        ],
+        "pedagogy": "P01"
+      },
+      "AI363IA": {
+        "subject": "Natural Language Processing and Transformers",
+        "faculty": [
+          "Prof. Vijayalakshmi M. N.",
+          "Prof. Anupama Kumar"
+        ],
+        "pedagogy": "P10"
+      },
+      "AI364TA": {
+        "subject": "Cloud Computing Technology & Architectures",
+        "faculty": [
+          "Prof. B. Sathish Babu",
+          "Prof. Harshitha V",
+          "Prof. Rushikesh P"
+        ],
+        "pedagogy": "P01"
+      },
+      "AI365TDD": {
+        "subject": "Generative Artificial Intelligence",
+        "faculty": [
+          "Prof. Somesh Nandi",
+          "Prof. Rajesh RM"
+        ],
+        "pedagogy": "P01"
+      },
+      "AI367P": {
+        "subject": "Interdisciplinary Project",
+        "faculty": [
+          "Prof. Rajesh RM"
+        ],
+        "pedagogy": "P06"
+      }
+    }
+  },
+  "2024": {
+    "semester_3": {
+      "MAT231ET": {
+        "subject": "Mathematics for Artificial Intelligence & Machine Learning",
+        "faculty": [
+          "Dr. T. Prasanna Kumar",
+          "Dr. Sowmya M"
+        ],
+        "pedagogy": "P01"
+      },
+      "AI233AI": {
+        "subject": "Fundamentals of Data Structures and Data Analysis",
+        "faculty": [
+          "Dr. B. Sathish Babu",
+          "Prof. Rushikesh P"
+        ],
+        "pedagogy": "P03"
+      },
+      "AI234AI": {
+        "subject": "Foundations of Cyber Physical Systems",
+        "faculty": [
+          "Prof. Narasimha Swamy S",
+          "Prof. Somesh Nandi"
+        ],
+        "pedagogy": "P01"
+      },
+      "AI235AT": {
+        "subject": "Statistics for Data Science",
+        "faculty": [
+          "Dr. Arulalan Rajan",
+          "Dr. Prasad S. Murthy"
+        ],
+        "pedagogy": "P04"
+      },
+      "AI237DL": {
+        "subject": "Design Thinking Lab",
+        "faculty": [
+          "Prof. Vijayalakshmi M. N.",
+          "Prof. B. Sathish Babu"
+        ],
+        "pedagogy": "P06"
+      }
+    },
+    "semester_4": {
+      "CS241AT": {
+        "subject": "Discrete Mathematical Structures and Combinatorics",
+        "faculty": [
+          "Dr. Hemanth Kumar B",
+          "Dr. Sakshath T. N."
+        ],
+        "pedagogy": "P01"
+      },
+      "CD343AI": {
+        "subject": "Design and Analysis of Algorithms",
+        "faculty": [
+          "Prof. Rajesh M",
+          "Prof. S. Anupama Kumar"
+        ],
+        "pedagogy": "P05"
+      },
+      "AI244AI": {
+        "subject": "Artificial Intelligence and Machine Learning",
+        "faculty": [
+          "Prof. K. Vishwavardhan Reddy",
+          "Prof. Manasa M"
+        ],
+        "pedagogy": "P03"
+      },
+      "CY245AT": {
+        "subject": "Computer Networks",
+        "faculty": [
+          "Prof. Deepamala M. N.",
+          "Prof. Narasimha Swamy S"
+        ],
+        "pedagogy": "P01"
+      },
+      "HS248AT": {
+        "subject": "Universal Human Values",
+        "faculty": [
+          "Prof. Vijayalakshmi M. N.",
+          "Prof. B. Sathish Babu"
+        ],
+        "pedagogy": "P09"
+      }
+    }
+  },
+  "labs": {
+    "AI233AI": {
+      "subject": "Fundamentals of Data Structures and Data Analysis Lab",
+      "faculty": [
+        "Prof. Rajesh RM",
+        "Prof. Sonika C. T.",
+        "Prof. Rushikesh P"
+      ],
+      "pedagogy": "P10"
+    },
+    "AI234AI": {
+      "subject": "Foundations of Cyber Physical Systems Lab",
+      "faculty": [
+        "Prof. Narasimha Swamy S",
+        "Prof. Somesh Nandi",
+        "Prof. K. Vishwavardhan Reddy"
+      ],
+      "pedagogy": "P10"
+    },
+    "CD343AI": {
+      "subject": "Design and Analysis of Algorithms Lab",
+      "faculty": [
+        "Prof. Rajesh RM",
+        "Prof. S. Anupama Kumar",
+        "Prof. Manasa M",
+        "Prof. Rushikesh P"
+      ],
+      "pedagogy": "P10"
+    },
+    "AI244AI": {
+      "subject": "Artificial Intelligence and Machine Learning Lab",
+      "faculty": [
+        "Prof. K. Vishwavardhan Reddy",
+        "Prof. Somesh Nandi",
+        "Prof. Manasa M"
+      ],
+      "pedagogy": "P10"
+    }
+  }
+}
