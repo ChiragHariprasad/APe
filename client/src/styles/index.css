@@ -501,6 +501,98 @@ textarea.input-field {
   line-height: 1.5;
 }
 
+/* ========================================
+   CUSTOM DROPDOWNS, SELECT MENUS & CHECKBOXES
+   ======================================== */
+.form-input,
+select.form-input,
+select.input-field {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 42px 12px 16px;
+  background: var(--color-bg-input) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%23D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>') no-repeat right 14px center;
+  background-size: 16px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  cursor: pointer;
+}
+
+.form-input:focus,
+select.form-input:focus,
+select.input-field:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px var(--color-accent-glow), 0 4px 12px rgba(0,0,0,0.1);
+  background-color: var(--color-bg-primary);
+}
+
+select.form-input option,
+select.input-field option {
+  background-color: #18181b;
+  color: #ffffff;
+  padding: 12px;
+  font-size: 14px;
+}
+
+/* Custom Checkbox Styling */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 2px solid var(--color-border-hover);
+  background: var(--color-bg-input);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+input[type="checkbox"]:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent-glow);
+}
+
+input[type="checkbox"]:checked {
+  background: var(--color-accent) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>') no-repeat center;
+  background-size: 12px;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px var(--color-accent-glow);
+  transform: scale(1.05);
+}
+
+/* Custom Radio Styling */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border-hover);
+  background: var(--color-bg-input);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+input[type="radio"]:checked {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  box-shadow: inset 0 0 0 4px var(--color-bg-primary), 0 0 10px var(--color-accent-glow);
+}
+
+
 
 /* ========================================
    BADGES — with subtle entrance

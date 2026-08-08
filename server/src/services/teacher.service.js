@@ -499,3 +499,34 @@ export async function getAvailableSubjects() {
 
   return grouped;
 }
+
+/**
+ * Delete teacher data in database if the logged out user is a dev email.
+ */
+export async function deleteDevTeacherData(userId, email) {
+  if (!email) return;
+  const devEmails = ['manoj.ai23@rvce.edu.in', 'chiragh.ai24@rvce.edu.in'];
+  if (!devEmails.includes(email.toLowerCase().trim())) return;
+
+  try {
+    const tpRes = await db.query(`SELECT id FROM teacher_profiles WHERE user_id = $1`, [userId]);
+    if (tpRes.rows.length > 0) {
+      const teacherProfileId = tpRes.rows[0].id;
+      const tcRes = await db.query(`SELECT id FROM teacher_course_profiles WHERE teacher_id = $1`, [teacherProfileId]);
+      const tcIds = tcRes.rows.map(r => r.id);
+
+      if (tcIds.length > 0) {
+        await db.query(`DELETE FROM teacher_interview_turns WHERE teacher_course_id = ANY($1)`, [tcIds]);
+        await db.query(`DELETE FROM teacher_mismatch_probes WHERE teacher_course_id = ANY($1)`, [tcIds]);
+        await db.query(`DELETE FROM teacher_post_evaluations WHERE teacher_course_id = ANY($1)`, [tcIds]);
+        await db.query(`DELETE FROM teacher_course_profiles WHERE teacher_id = $1`, [teacherProfileId]);
+      }
+
+      await db.query(`DELETE FROM teacher_profiles WHERE user_id = $1`, [userId]);
+    }
+    console.log(`[Dev Reset] Cleaned up temporary teacher entries for ${email}`);
+  } catch (err) {
+    console.error(`[Dev Reset Error] Failed to delete teacher entries for ${email}:`, err);
+  }
+}
+

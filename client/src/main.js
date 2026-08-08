@@ -22,6 +22,7 @@ import { showToast } from './components/toast.js';
 
 const app = document.getElementById('app');
 let currentUser = null;
+let activeViewMode = null; // 'student' | 'teacher' | null
 
 /**
  * Initialize the app — check auth state and route accordingly based on role.
@@ -81,9 +82,14 @@ function routeUser(user) {
 async function navigate(page, data = {}) {
   window.dispatchEvent(new Event('cleanup'));
 
+  if (data.forceRole) {
+    activeViewMode = data.forceRole;
+  }
+
   switch (page) {
     case 'login':
       currentUser = null;
+      activeViewMode = null;
       renderLoginPage(app);
       break;
 
@@ -94,8 +100,12 @@ async function navigate(page, data = {}) {
       break;
 
     case 'dashboard':
+    case 'student-dashboard':
       if (!ensureUser()) return;
-      if (currentUser?.role === 'teacher') {
+      if (activeViewMode === 'student' || data.forceRole === 'student') {
+        activeViewMode = 'student';
+        await renderDashboardPage(app, currentUser);
+      } else if (currentUser?.role === 'teacher') {
         renderTeacherDashboardPage(app, currentUser);
       } else {
         await renderDashboardPage(app, currentUser);
@@ -119,6 +129,7 @@ async function navigate(page, data = {}) {
 
     case 'teacher-dashboard':
       if (!ensureUser()) return;
+      activeViewMode = 'teacher';
       await renderTeacherDashboardPage(app, currentUser);
       break;
 
@@ -141,7 +152,7 @@ async function navigate(page, data = {}) {
       break;
 
     default:
-      if (currentUser?.role === 'teacher') {
+      if (currentUser?.role === 'teacher' && activeViewMode !== 'student') {
         navigate('teacher-dashboard');
       } else {
         navigate('dashboard');

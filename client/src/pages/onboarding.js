@@ -11,7 +11,7 @@ export function renderOnboardingPage(container, user) {
   container.innerHTML = `
     <div class="onboarding-page page-enter">
       <div class="glass-card onboarding-card">
-        <h1 class="onboarding-greeting">Welcome, ${user?.displayName || 'Student'}! 👋</h1>
+        <h1 class="onboarding-greeting">Welcome, ${user?.displayName || 'Student'}</h1>
         <p class="onboarding-question">Before we begin, are you a <strong>lateral entry</strong> student?</p>
 
         <div class="toggle-group" id="lateral-toggle">

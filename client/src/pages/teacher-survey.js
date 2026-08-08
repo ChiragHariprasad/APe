@@ -171,7 +171,7 @@ function renderStageHeader(title, stepNum) {
             const isCompleted = s.num < stepNum;
             return `
               <div class="stage-step ${isCurrent ? 'active' : isCompleted ? 'completed' : ''}">
-                <span class="stage-step-num">${isCompleted ? '✓' : s.num}</span>
+                <span class="stage-step-num">${isCompleted ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : s.num}</span>
                 <span>${s.label}</span>
               </div>
             `;
@@ -491,8 +491,9 @@ function renderInterviewStage(container, user) {
                 ${renderPedagogyMixWidget(interviewState.pedagogyMix)}
               </div>
 
-              <div style="margin-top:auto; background:var(--color-bg-secondary); padding:12px; border-radius:10px; font-size:12px; color:var(--color-text-muted);">
-                💡 <strong>Tip:</strong> Be specific about in-class exercises, quizzes, or group activities to help the AI accurately capture your teaching evidence.
+              <div style="margin-top:auto; background:var(--color-bg-secondary); padding:12px; border-radius:10px; font-size:12px; color:var(--color-text-muted); display:flex; align-items:flex-start; gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" style="flex-shrink:0; margin-top:2px;"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                <span><strong>Tip:</strong> Be specific about in-class exercises, quizzes, or group activities to help the AI accurately capture your teaching evidence.</span>
               </div>
             </div>
 
@@ -532,7 +533,10 @@ function renderInterviewStage(container, user) {
 
                 ${interviewState.isComplete ? `
                   <div class="chat-bubble chat-bubble-ai" style="border-color:var(--color-success); background:rgba(16, 185, 129, 0.1);">
-                    <div style="font-size:11px; font-weight:800; color:var(--color-success); margin-bottom:4px;">INTERVIEW COMPLETE ✓</div>
+                    <div style="font-size:11px; font-weight:800; color:var(--color-success); margin-bottom:4px; display:inline-flex; align-items:center; gap:6px;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                      INTERVIEW COMPLETE
+                    </div>
                     <div>Thank you! All required evidence has been gathered. You can now proceed to Stage T3 Mismatch Probes.</div>
                   </div>
                 ` : ''}
@@ -553,10 +557,16 @@ function renderInterviewStage(container, user) {
               <!-- Input Area -->
               <div style="padding:14px 16px; border-top:1px solid var(--color-border); background:var(--color-bg-glass); display:flex; gap:10px;">
                 ${interviewState.isComplete ? `
-                  <button type="button" id="next-to-t3-btn" class="btn btn-primary" style="width:100%; min-height:48px; font-weight:700;">Proceed to Stage T3 Mismatch Probes →</button>
+                  <button type="button" id="next-to-t3-btn" class="btn btn-primary" style="width:100%; min-height:48px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
+                    Proceed to Stage T3 Mismatch Probes
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </button>
                 ` : `
                   <textarea id="interview-answer-input" class="form-input" placeholder="Type your narrative response here... (Press Enter to send)" rows="2" style="flex:1; resize:none; font-size:14px; padding:10px;"></textarea>
-                  <button type="button" id="send-interview-btn" class="btn btn-primary" style="min-width:90px; height:auto; font-weight:700;">Send ➔</button>
+                  <button type="button" id="send-interview-btn" class="btn btn-primary" style="min-width:90px; height:auto; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
+                    Send
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </button>
                 `}
               </div>
 
@@ -794,8 +804,8 @@ function renderSummaryStage(container, user) {
     <div class="survey-page page-enter">
       <div class="container container-survey" style="max-width:680px; margin-top:40px;">
         <div class="glass-card" style="padding:40px; text-align:center;">
-          <div style="width:64px; height:64px; border-radius:50%; background:var(--color-success); color:white; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 20px auto; box-shadow:0 0 20px var(--color-success);">
-            ✓
+          <div style="width:64px; height:64px; border-radius:50%; background:var(--color-success); color:white; display:flex; align-items:center; justify-content:center; margin:0 auto 20px auto; box-shadow:0 0 20px var(--color-success);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <h2 style="margin:0 0 8px 0; font-size:24px; font-weight:800; color:var(--color-text-primary);">Questionnaire & AI Interview Complete!</h2>
           <p style="color:var(--color-text-muted); font-size:14px; margin-bottom:28px;">

@@ -54,8 +54,9 @@ function renderDashboard(container, user, data) {
                 : `<div class="header-avatar" style="background: var(--color-accent); display:flex; align-items:center; justify-content:center; font-size:14px; color:white;">${(user?.displayName || '?')[0]}</div>`
               }
               ${(user?.isDev || ['manoj.ai23@rvce.edu.in', 'chiragh.ai24@rvce.edu.in'].includes(user?.email)) ? `
-                <button class="btn btn-ghost btn-sm" id="switch-view-btn" style="color:var(--color-accent); border:1px solid var(--color-accent); font-size:12px;">
-                  🔄 Switch to Teacher View
+                <button class="btn btn-ghost btn-sm" id="switch-view-btn" style="color:var(--color-accent); border:1px solid var(--color-accent); font-size:12px; display:inline-flex; align-items:center; gap:6px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6"/><path d="M2 11.5a10 10 0 0 1 18.8-4.3L21.5 8M22 12.5a10 10 0 0 1-18.8 4.3L2.5 16"/></svg>
+                  Switch to Teacher View
                 </button>
               ` : ''}
               <button class="btn btn-ghost btn-icon" id="logout-btn" title="Logout">
@@ -74,10 +75,10 @@ function renderDashboard(container, user, data) {
             <p>Complete the pedagogy evaluation surveys for your courses</p>
           </div>
 
-          ${renderSection('Compulsory', compulsory, 'compulsory', '🔴')}
-          ${renderSection('Optional (Previous Semesters)', optional, 'optional', '🔵')}
-          ${renderSection('Labs', labs.filter(l => l.surveyStatus !== 'completed'), 'optional', '🧪')}
-          ${renderSection('Completed', [...completed, ...labs.filter(l => l.surveyStatus === 'completed')], 'completed', '✅')}
+          ${renderSection('Compulsory', compulsory, 'compulsory', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>')}
+          ${renderSection('Optional (Previous Semesters)', optional, 'optional', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>')}
+          ${renderSection('Labs', labs.filter(l => l.surveyStatus !== 'completed'), 'optional', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55A1 1 0 0 0 5.61 22h12.78a1 1 0 0 0 .89-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><line x1="8.5" y1="2" x2="15.5" y2="2"/></svg>')}
+          ${renderSection('Completed', [...completed, ...labs.filter(l => l.surveyStatus === 'completed')], 'completed', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>')}
         </div>
       </main>
     </div>
@@ -98,7 +99,7 @@ function renderDashboard(container, user, data) {
 
   // Switch view for dev
   document.getElementById('switch-view-btn')?.addEventListener('click', () => {
-    window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'teacher-dashboard' } }));
+    window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'teacher-dashboard', forceRole: 'teacher' } }));
   });
 
   // Logout
@@ -113,7 +114,7 @@ function renderSection(title, subjects, type, icon) {
 
   return `
     <div class="section-header">
-      <span>${icon}</span>
+      <span style="display:inline-flex; align-items:center;">${icon}</span>
       <h2>${title}</h2>
       <span class="section-count">${subjects.length}</span>
     </div>
@@ -129,7 +130,7 @@ function renderSubjectCard(subject, type) {
   const progressPercent = isInProgress ? Math.round((subject.currentIndex / 12) * 100) : 0;
 
   const statusBadge = isCompleted
-    ? '<span class="badge badge-completed">✓ Completed</span>'
+    ? '<span class="badge badge-completed" style="display:inline-flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Completed</span>'
     : type === 'compulsory'
       ? '<span class="badge badge-required">Required</span>'
       : '<span class="badge badge-optional">Optional</span>';

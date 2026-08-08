@@ -95,13 +95,20 @@ router.get('/me', authenticateToken, async (req, res) => {
   }
 });
 
+import { deleteDevTeacherData } from '../services/teacher.service.js';
+
 /**
  * POST /api/auth/logout
- * Client-side logout (invalidate token on client).
+ * Client-side logout (invalidate token on client). If dev email, reset temporary teacher DB entries.
  */
-router.post('/logout', authenticateToken, (req, res) => {
-  // JWT is stateless; client should discard the token.
-  // For server-side invalidation, add token to a blacklist (not implemented for MVP).
+router.post('/logout', authenticateToken, async (req, res) => {
+  try {
+    if (req.user && req.user.email) {
+      await deleteDevTeacherData(req.user.id, req.user.email);
+    }
+  } catch (err) {
+    console.error('Logout dev cleanup error:', err);
+  }
   res.json({ success: true, message: 'Logged out.' });
 });
 

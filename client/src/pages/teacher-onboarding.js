@@ -63,10 +63,12 @@ function renderStepperHeader(activeStepNum) {
   return `
     <div class="stage-stepper-bar" style="margin-bottom:24px;">
       <div class="stage-step ${activeStepNum === 1 ? 'active' : 'completed'}">
-        <span class="stage-step-num">${activeStepNum > 1 ? '✓' : '1'}</span>
+        <span class="stage-step-num">${activeStepNum > 1 ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '1'}</span>
         <span>Step 1: Faculty Profile</span>
       </div>
-      <div style="color:var(--color-text-muted); font-size:12px;">➔</div>
+      <div style="color:var(--color-text-muted); font-size:12px; display:flex; align-items:center;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
       <div class="stage-step ${activeStepNum === 2 ? 'active' : ''}">
         <span class="stage-step-num">2</span>
         <span>Step 2: Select Courses</span>
@@ -221,9 +223,12 @@ function renderCourseSelectionStep(container, user) {
         ${renderStepperHeader(2)}
 
         <!-- Search & Filter Bar -->
-        <div style="display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap;">
-          <input type="text" id="course-search-input" class="form-input" placeholder="🔍 Search course code or name..." value="${searchQuery}" style="flex:1; min-width:240px;" />
-          <button type="button" class="btn btn-ghost btn-sm" id="select-all-btn" style="border:1px solid var(--color-border-accent); color:var(--color-text-accent);">Select All Visible</button>
+        <div style="display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; align-items:center;">
+          <div style="position:relative; flex:1; min-width:240px;">
+            <input type="text" id="course-search-input" class="form-input" placeholder="Search course code or name..." value="${searchQuery}" style="padding-left:38px;" />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); pointer-events:none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" id="select-all-btn" style="border:1px solid var(--color-border-accent); color:var(--color-text-accent); min-height:48px;">Select All Visible</button>
         </div>
 
         <div class="courses-selector-container" style="max-height: 480px; overflow-y: auto; padding-right: 8px; margin-bottom: 24px;">

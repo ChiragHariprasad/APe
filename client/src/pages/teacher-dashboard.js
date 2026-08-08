@@ -66,8 +66,9 @@ function renderDashboard(container, user, data) {
                 : `<div class="header-avatar" style="background: var(--color-accent); display:flex; align-items:center; justify-content:center; font-size:14px; color:white; font-weight:700;">${(user?.displayName || 'T')[0]}</div>`
               }
               ${(user?.isDev || ['manoj.ai23@rvce.edu.in', 'chiragh.ai24@rvce.edu.in'].includes(user?.email)) ? `
-                <button class="btn btn-ghost btn-sm" id="switch-student-view-btn" style="color:var(--color-accent); border:1px solid var(--color-accent); font-size:12px;">
-                  🎓 Switch to Student View
+                <button class="btn btn-ghost btn-sm" id="switch-student-view-btn" style="color:var(--color-accent); border:1px solid var(--color-accent); font-size:12px; display:inline-flex; align-items:center; gap:6px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                  Switch to Student View
                 </button>
               ` : ''}
               <button class="btn btn-ghost btn-icon" id="logout-btn" title="Logout">
@@ -104,7 +105,9 @@ function renderDashboard(container, user, data) {
           <!-- Quick Analytics Stats Grid -->
           <div class="teacher-stats-grid">
             <div class="teacher-stat-card">
-              <div class="stat-icon">📚</div>
+              <div class="stat-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
               <div>
                 <div class="stat-value">${totalCourses}</div>
                 <div class="stat-label">Total Assigned Courses</div>
@@ -112,7 +115,9 @@ function renderDashboard(container, user, data) {
             </div>
 
             <div class="teacher-stat-card">
-              <div class="stat-icon">⏳</div>
+              <div class="stat-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+              </div>
               <div>
                 <div class="stat-value" style="color:var(--color-warning);">${inProgressCount}</div>
                 <div class="stat-label">In-Progress Surveys</div>
@@ -120,7 +125,9 @@ function renderDashboard(container, user, data) {
             </div>
 
             <div class="teacher-stat-card">
-              <div class="stat-icon">✅</div>
+              <div class="stat-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
               <div>
                 <div class="stat-value" style="color:var(--color-success);">${completedCount}</div>
                 <div class="stat-label">Completed Evaluations</div>
@@ -128,7 +135,9 @@ function renderDashboard(container, user, data) {
             </div>
 
             <div class="teacher-stat-card">
-              <div class="stat-icon">⚠️</div>
+              <div class="stat-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
               <div>
                 <div class="stat-value" style="color:var(--color-error);">${mismatchCount}</div>
                 <div class="stat-label">Mismatches Flagged</div>
@@ -138,8 +147,11 @@ function renderDashboard(container, user, data) {
 
           <!-- Search & Filter Controls -->
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
-            <div style="display:flex; gap:12px; flex:1; min-width:280px;">
-              <input type="text" id="dashboard-search" class="form-input" placeholder="🔍 Search course code or subject..." value="${searchQuery}" style="flex:1;" />
+            <div style="display:flex; gap:12px; flex:1; min-width:280px; align-items:center;">
+              <div style="position:relative; flex:1;">
+                <input type="text" id="dashboard-search" class="form-input" placeholder="Search course code or subject..." value="${searchQuery}" style="padding-left:38px;" />
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); pointer-events:none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
               <select id="status-filter-select" class="form-input" style="width:180px;">
                 <option value="ALL" ${statusFilter === 'ALL' ? 'selected' : ''}>All Stages</option>
                 <option value="not_started" ${statusFilter === 'not_started' ? 'selected' : ''}>Not Started</option>
@@ -186,7 +198,7 @@ function renderDashboard(container, user, data) {
 
   // Switch view for dev
   document.getElementById('switch-student-view-btn')?.addEventListener('click', () => {
-    window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'dashboard' } }));
+    window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'student-dashboard', forceRole: 'student' } }));
   });
 
   // Logout
@@ -318,7 +330,7 @@ function renderCourseCard(course, pedagogyLabels) {
 
       <!-- Action Button -->
       <div style="margin-top:auto; border-top:1px solid var(--color-border); padding-top:14px; display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-size:12px; color:var(--color-text-muted); font-weight:600;">${isCompleted ? '✓ Evaluation Complete' : 'In Progress'}</span>
+        <span style="font-size:12px; color:var(--color-text-muted); font-weight:600; display:inline-flex; align-items:center; gap:4px;">${isCompleted ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Evaluation Complete' : 'In Progress'}</span>
         <button class="btn btn-primary btn-sm teacher-action-btn" style="font-weight:700; border-radius:8px;">
           ${actionText}
         </button>

@@ -165,8 +165,9 @@ function renderOpenEndedQuestion(question) {
           <div id="audio-preview-area"></div>
         </div>
         ${existingVoiceNoteId ? `
-          <div style="margin-top: var(--space-2); font-size: var(--font-size-sm); color: var(--color-success);">
-            ✓ Voice note already uploaded
+          <div style="margin-top: var(--space-2); font-size: var(--font-size-sm); color: var(--color-success); display:inline-flex; align-items:center; gap:4px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            Voice note uploaded
           </div>
         ` : ''}
       </div>
@@ -260,18 +261,6 @@ function attachLikertListeners() {
     // Update visual state
     scale.querySelectorAll('.likert-option').forEach(o => o.classList.remove('selected'));
     option.classList.add('selected');
-
-    // Emoji Feedback Animation
-    const emojis = ['😠', '🙁', '😐', '🙂', '🤩'];
-    const emoji = document.createElement('div');
-    emoji.className = 'emoji-feedback';
-    emoji.textContent = emojis[rating - 1];
-    
-    const rect = option.getBoundingClientRect();
-    emoji.style.left = `${rect.left + rect.width / 2 - 16}px`;
-    emoji.style.top = `${rect.top}px`;
-    document.body.appendChild(emoji);
-    setTimeout(() => emoji.remove(), 1000);
 
     // Store answer
     answers[question.index] = { rating };
@@ -497,7 +486,7 @@ async function uploadVoiceNote(blob, durationSecs) {
     if (nextBtn) nextBtn.disabled = false;
 
     if (uploadBtn) {
-      uploadBtn.textContent = '✓ Uploaded';
+      uploadBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align:middle; margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Uploaded';
       uploadBtn.style.color = 'var(--color-success)';
     }
   } catch (err) {
