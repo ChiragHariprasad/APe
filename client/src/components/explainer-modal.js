@@ -44,10 +44,10 @@ const EXPLAINER_DICTIONARY = {
 
   // Pedagogy Strategies & Definitions
   'active_learning': {
-    title: 'Active Learning & Engagement',
-    short: 'Students actively participate through hands-on activities, discussions, or problem solving.',
-    detail: 'Instead of sitting passively during lectures, students solve short problems, debate concepts, work in pairs, or answer interactive polls in class.',
-    example: '5-minute think-pair-share exercises during a theory lecture.'
+    title: 'Active & Interactive Teaching Methods',
+    short: 'Active teaching is an instructional approach where students actively engage with course material through classroom activities, live problem-solving, discussions, and peer interaction, rather than passively listening to a lecture.',
+    detail: 'Instead of continuous monologue lecturing, active teaching incorporates interactive breaks—such as Think-Pair-Share, live polling/quizzes, small group problem solving, case discussions, or peer instruction. This approach boosts student attention, deepens conceptual understanding, and improves knowledge retention.',
+    example: 'Posing a conceptual question during lecture, letting students discuss for 2 minutes with a neighbor (Think-Pair-Share), and voting on answers via clickers or raised hands.'
   },
   'direct_instruction': {
     title: 'Direct Instruction / Explicit Teaching',
@@ -106,16 +106,22 @@ const EXPLAINER_DICTIONARY = {
 
   // Ratings & Dimensions
   'capability_confidence': {
-    title: 'Capability Confidence (1-5 Scale)',
-    short: 'Your self-assessed skill level in planning and executing interactive teaching strategies.',
-    detail: 'Rate how comfortable and skilled you feel when organizing active learning, group work, or interactive classroom techniques.',
-    example: '1 = Novice / Hesitant, 3 = Moderate, 5 = Highly Experienced Expert.'
+    title: 'Confidence in Primary Approach (1-5 Scale)',
+    short: 'Your self-assessed confidence and skill level in planning and executing your primary teaching methodology.',
+    detail: 'Rate how comfortable, skilled, and effective you feel when organizing and delivering your main teaching approach in class.',
+    example: '1 = Low Confidence / Novice (needs prep support), 3 = Moderate / Competent, 5 = Highly Experienced Master.'
+  },
+  'interest_trying': {
+    title: 'Openness to New Pedagogical Models (1-5 Scale)',
+    short: 'Your eagerness to experiment with new or innovative teaching techniques.',
+    detail: 'Reflects your willingness to try modern instructional models such as flipped classroom, peer instruction, or problem-based learning.',
+    example: '1 = Prefer conventional traditional routines, 5 = Enthusiastic about trying new teaching frameworks.'
   },
   'willingness_change': {
-    title: 'Willingness to Change (1-5 Scale)',
-    short: 'Your openness to modifying lesson plans, assessment styles, or classroom delivery.',
-    detail: 'Measures how eager or open you are to trying new instructional methods or altering existing course schedules.',
-    example: '1 = Prefer existing fixed routine, 5 = Eager to experiment with new methods.'
+    title: 'Willingness to Modify Course Design (1-5 Scale)',
+    short: 'Your flexibility to adapt lesson plans, assessment formats, or teaching pace based on student evidence.',
+    detail: 'Measures how open you are to refining course structure when student feedback (PES), learning analytics, or performance metrics suggest room for improvement.',
+    example: '1 = Fixed rigid syllabus regardless of student data, 5 = Continuously refining course design based on student learning evidence.'
   },
   'workload_burden': {
     title: 'Workload Burden (1-5 Scale)',
@@ -164,8 +170,8 @@ export function showExplainerModal(key, customTitle = '', customText = '', trigg
   const dictInfo = EXPLAINER_DICTIONARY[keyLower] || {};
 
   const title = customTitle || dictInfo.title || key || 'Information & Context';
-  const short = customText || dictInfo.short || 'Additional details regarding this item.';
-  const detail = dictInfo.detail || 'This metric or option helps assess pedagogy alignment and student learning experience.';
+  const short = (dictInfo.short || customText || 'Additional details regarding this item.');
+  const detail = dictInfo.detail || (customText && customText !== short ? customText : 'This option helps assess pedagogy alignment and student learning experience.');
   const example = dictInfo.example || '';
 
   const isMobile = window.innerWidth <= 768;
@@ -207,16 +213,33 @@ export function showExplainerModal(key, customTitle = '', customText = '', trigg
 
   if (!isMobile && triggerEl) {
     const rect = triggerEl.getBoundingClientRect();
-    const cardWidth = 360;
-    let left = rect.left + window.scrollX - (cardWidth / 2) + 12;
-    let top = rect.bottom + window.scrollY + 8;
+    const cardWidth = Math.min(420, window.innerWidth - 32);
 
+    card.style.position = 'fixed';
+    card.style.width = `${cardWidth}px`;
+    card.style.maxHeight = 'calc(100vh - 40px)';
+    card.style.overflowY = 'auto';
+
+    // Calculate height
+    const cardHeight = card.offsetHeight || 300;
+
+    let left = rect.left + (rect.width / 2) - (cardWidth / 2);
+    let top = rect.bottom + 10;
+
+    // If popping below overflows screen bottom, pop ABOVE trigger element
+    if (top + cardHeight > window.innerHeight - 20) {
+      top = rect.top - cardHeight - 10;
+    }
+
+    // Clamp inside viewport boundaries so modal is ALWAYS 100% visible
+    if (top < 20) {
+      top = Math.max(20, (window.innerHeight - cardHeight) / 2);
+    }
     if (left + cardWidth > window.innerWidth - 16) {
       left = window.innerWidth - cardWidth - 16;
     }
     if (left < 16) left = 16;
 
-    card.style.position = 'absolute';
     card.style.left = `${left}px`;
     card.style.top = `${top}px`;
   }
@@ -250,3 +273,4 @@ export function attachInfoToLabel(labelSelector, key, title = '', text = '') {
     label.appendChild(btn);
   });
 }
+

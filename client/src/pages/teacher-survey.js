@@ -220,20 +220,26 @@ function renderT1Stage(container, user) {
                         <input type="checkbox" name="currentPedagogies" value="${p.id}" ${t1Data.currentPedagogies.includes(p.id) ? 'checked' : ''} style="accent-color:var(--color-accent);" />
                         <span style="font-size:13px; font-weight:600; color:var(--color-text-primary);">${p.label}</span>
                       </div>
+                      <button type="button" class="info-btn option-info-btn" data-key="${p.id}" title="Info for ${p.label}">i</button>
                     </label>
                   `).join('')}
                 </div>
               </div>
 
-              <!-- T1.2 Primary Pedagogy -->
+              <!-- T1.2 Primary Pedagogy (Radio Cards with Info Button for Each Option) -->
               <div class="form-group" style="margin-bottom:24px;">
-                <label class="form-label" id="lbl-t1-2">T1.2 Which is your PRIMARY teaching approach?</label>
-                <select name="primaryPedagogy" class="form-input" style="min-height:48px;" required>
-                  <option value="">-- Select Primary Teaching Approach --</option>
+                <label class="form-label" id="lbl-t1-2">T1.2 Which is your PRIMARY teaching approach? <span style="font-weight:400; font-size:12px; color:var(--color-text-muted);">(Select one option)</span></label>
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:10px; margin-top:10px;">
                   ${PEDAGOGY_OPTIONS.map(p => `
-                    <option value="${p.id}" ${t1Data.primaryPedagogy === p.id ? 'selected' : ''}>${p.label}</option>
+                    <label class="checkbox-option-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px; border:1px solid var(--color-border); border-radius:10px; cursor:pointer; background:var(--color-bg-card);">
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <input type="radio" name="primaryPedagogy" value="${p.id}" ${t1Data.primaryPedagogy === p.id ? 'checked' : ''} style="accent-color:var(--color-accent);" required />
+                        <span style="font-size:13px; font-weight:600; color:var(--color-text-primary);">${p.label}</span>
+                      </div>
+                      <button type="button" class="info-btn option-info-btn" data-key="${p.id}" title="Info for ${p.label}">i</button>
+                    </label>
                   `).join('')}
-                </select>
+                </div>
               </div>
 
               <!-- T1.3 Confidence -->
@@ -310,20 +316,30 @@ function renderT1Stage(container, user) {
     </div>
   `;
 
-  // Attach info buttons (i)
+  // Attach info buttons (i) to question labels where appropriate
   const attachInfo = (id, key, title, text) => {
     const el = container.querySelector(`#${id}`);
     if (el) el.appendChild(createInfoButton(key, title, text));
   };
 
   attachInfo('lbl-t1-1', 't1', 'Current Teaching Approaches', 'Broad set of strategies you employ across courses.');
-  attachInfo('lbl-t1-2', 't1', 'Primary Teaching Approach', 'The dominant methodology used in most of your classes.');
-  attachInfo('lbl-t1-3', 'capability_confidence', 'Primary Approach Confidence', 'How confident you feel facilitating your main approach.');
-  attachInfo('lbl-t1-4', 'active_learning', 'Active Teaching Comfort', 'Comfort level running interactive exercises.');
-  attachInfo('lbl-t1-5', 'willingness_change', 'Openness to New Models', 'Eagerness to experiment with innovative teaching frameworks.');
-  attachInfo('lbl-t1-6', 'willingness_change', 'Willingness to Modify Design', 'Flexibility to update course structures based on feedback.');
+  // Note: T1.2 info button on question label removed per request. Info buttons are on each option instead!
+  attachInfo('lbl-t1-3', 'capability_confidence', 'Primary Approach Confidence');
+  attachInfo('lbl-t1-4', 'active_learning', 'Active & Interactive Teaching Methods');
+  attachInfo('lbl-t1-5', 'interest_trying', 'Openness to New Models');
+  attachInfo('lbl-t1-6', 'willingness_change', 'Willingness to Modify Course Design');
   attachInfo('lbl-t1-7', 't1', 'Open Aspects of Change', 'Course components you are willing to adapt.');
   attachInfo('lbl-t1-8', 'constraints', 'Instructional Constraints', 'Institutional and environmental barriers affecting delivery.');
+
+  // Attach handlers for individual option info buttons (i)
+  container.querySelectorAll('.option-info-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const key = btn.dataset.key;
+      showExplainerModal(key, '', '', btn);
+    });
+  });
 
   attachExitButton(container);
   attachRatingChips(container, t1Data);
@@ -373,9 +389,12 @@ function renderT2Stage(container, user) {
                 <label class="form-label" id="lbl-t2-1">T2.1 Pedagogies deployed in THIS course</label>
                 <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:10px; margin-top:10px;">
                   ${PEDAGOGY_OPTIONS.map(p => `
-                    <label class="checkbox-option-card" style="display:flex; align-items:center; gap:10px; padding:12px; border:1px solid var(--color-border); border-radius:10px; cursor:pointer; background:var(--color-bg-card);">
-                      <input type="checkbox" name="coursePedagogies" value="${p.id}" ${t2Data.coursePedagogies.includes(p.id) ? 'checked' : ''} style="accent-color:var(--color-accent);" />
-                      <span style="font-size:13px; font-weight:600; color:var(--color-text-primary);">${p.label}</span>
+                    <label class="checkbox-option-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px; border:1px solid var(--color-border); border-radius:10px; cursor:pointer; background:var(--color-bg-card);">
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <input type="checkbox" name="coursePedagogies" value="${p.id}" ${t2Data.coursePedagogies.includes(p.id) ? 'checked' : ''} style="accent-color:var(--color-accent);" />
+                        <span style="font-size:13px; font-weight:600; color:var(--color-text-primary);">${p.label}</span>
+                      </div>
+                      <button type="button" class="info-btn option-info-btn" data-key="${p.id}" title="Info for ${p.label}">i</button>
                     </label>
                   `).join('')}
                 </div>
@@ -383,13 +402,18 @@ function renderT2Stage(container, user) {
 
               <!-- T2.2 Primary Course Pedagogy -->
               <div class="form-group" style="margin-bottom:24px;">
-                <label class="form-label" id="lbl-t2-2">T2.2 Primary pedagogy for THIS course</label>
-                <select name="coursePrimary" class="form-input" style="min-height:48px;" required>
-                  <option value="">-- Select Primary Approach --</option>
+                <label class="form-label" id="lbl-t2-2">T2.2 Primary pedagogy for THIS course <span style="font-weight:400; font-size:12px; color:var(--color-text-muted);">(Select one option)</span></label>
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:10px; margin-top:10px;">
                   ${PEDAGOGY_OPTIONS.map(p => `
-                    <option value="${p.id}" ${t2Data.coursePrimary === p.id ? 'selected' : ''}>${p.label}</option>
+                    <label class="checkbox-option-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px; border:1px solid var(--color-border); border-radius:10px; cursor:pointer; background:var(--color-bg-card);">
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <input type="radio" name="coursePrimary" value="${p.id}" ${t2Data.coursePrimary === p.id ? 'checked' : ''} style="accent-color:var(--color-accent);" required />
+                        <span style="font-size:13px; font-weight:600; color:var(--color-text-primary);">${p.label}</span>
+                      </div>
+                      <button type="button" class="info-btn option-info-btn" data-key="${p.id}" title="Info for ${p.label}">i</button>
+                    </label>
                   `).join('')}
-                </select>
+                </div>
               </div>
 
               <!-- T2.3 Perceived Effectiveness -->
@@ -436,13 +460,24 @@ function renderT2Stage(container, user) {
   };
 
   attachInfo('lbl-t2-1', 't2', 'Course Deployed Pedagogies', 'Methods used specifically within this course syllabus.');
-  attachInfo('lbl-t2-2', 't2', 'Primary Course Pedagogy', 'The main teaching model used in this subject.');
+  // T2.2 info button on label removed per request. Info buttons are on each option card instead!
   attachInfo('lbl-t2-3', 't2', 'Perceived Effectiveness', 'How well current methods meet syllabus objectives.');
   attachInfo('lbl-t2-4', 't2', 'Teacher Satisfaction', 'Your contentment with student understanding and activity.');
   attachInfo('lbl-t2-5', 't2', 'Course Context Fit', 'How well the pedagogy matches course difficulty and prerequisites.');
 
+  // Attach handlers for individual option info buttons (i)
+  container.querySelectorAll('.option-info-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const key = btn.dataset.key;
+      showExplainerModal(key, '', '', btn);
+    });
+  });
+
   attachExitButton(container);
   attachRatingChips(container, t2Data);
+
 
   container.querySelector('#t2-form').addEventListener('submit', async (e) => {
     e.preventDefault();
