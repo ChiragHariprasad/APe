@@ -87,6 +87,8 @@ export const api = {
   saveTeacherT2: (teacherCourseId, data) => request('PUT', `/teacher/survey/${teacherCourseId}/t2`, data),
   sendInterviewAnswer: (teacherCourseId, answer, question = '') =>
     request('POST', `/teacher/survey/${teacherCourseId}/interview`, { answer, question }),
+  submitInterviewTurn: (teacherCourseId, answer, question = '') =>
+    request('POST', `/teacher/survey/${teacherCourseId}/interview`, { answer, question }),
   getInterviewState: (teacherCourseId) => request('GET', `/teacher/survey/${teacherCourseId}/interview`),
   getMismatchScenario: (teacherCourseId) => request('GET', `/teacher/survey/${teacherCourseId}/mismatch`),
   saveTeacherT3: (teacherCourseId, data) => request('POST', `/teacher/survey/${teacherCourseId}/t3`, data),

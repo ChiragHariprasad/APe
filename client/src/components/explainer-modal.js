@@ -43,65 +43,65 @@ const EXPLAINER_DICTIONARY = {
   },
 
   // Pedagogy Strategies & Definitions
-  'active_learning': {
-    title: 'Active & Interactive Teaching Methods',
-    short: 'Active teaching is an instructional approach where students actively engage with course material through classroom activities, live problem-solving, discussions, and peer interaction, rather than passively listening to a lecture.',
-    detail: 'Instead of continuous monologue lecturing, active teaching incorporates interactive breaks—such as Think-Pair-Share, live polling/quizzes, small group problem solving, case discussions, or peer instruction. This approach boosts student attention, deepens conceptual understanding, and improves knowledge retention.',
-    example: 'Posing a conceptual question during lecture, letting students discuss for 2 minutes with a neighbor (Think-Pair-Share), and voting on answers via clickers or raised hands.'
-  },
   'direct_instruction': {
     title: 'Direct Instruction / Explicit Teaching',
-    short: 'Teacher-led structured instruction focused on clear explanations and step-by-step guidance.',
-    detail: 'The instructor explains concepts directly, presents worked examples on the board/slides, and guides students through practice problems step by step.',
-    example: 'Standard 50-minute lecture explaining formula derivations with board work.'
+    short: 'You explain and demonstrate the concept directly.',
+    detail: 'The teacher leads the lesson, presents the material step-by-step, demonstrates how to solve problems, and then gives students practice.',
+    example: 'You teach a concept on the board, work through 2–3 examples, and then students solve similar questions.'
   },
   'guided_instruction': {
     title: 'Guided Instruction & Scaffolding',
-    short: 'Providing structured temporary support that is gradually removed as student competence grows.',
-    detail: 'The teacher gives templates, hints, and step-by-step prompt sheets initially, then gradually lets students work independently.',
-    example: 'Starting a lab exercise with pre-written code skeletons before giving blank files.'
+    short: 'You guide students through a task while gradually reducing your support.',
+    detail: 'Break a difficult concept into smaller steps, provide hints, examples, templates, or questions, and slowly let students work independently.',
+    example: 'First solve a problem together, then solve one with hints, and finally ask students to solve one on their own.'
+  },
+  'active_learning': {
+    title: 'Active Learning & Engagement',
+    short: 'Students learn by actively doing something rather than only listening.',
+    detail: 'Use questions, discussions, quizzes, demonstrations, problem-solving activities, or short exercises during the lesson.',
+    example: 'Instead of lecturing for an hour, pause every 10–15 minutes for students to answer a question or solve a problem.'
   },
   'peer_instruction': {
     title: 'Peer Instruction & Critique',
-    short: 'Students teach and discuss concepts with peers to reinforce understanding.',
-    detail: 'A concept question is posed, students answer individually, then discuss differences with a peer next to them before voting again.',
-    example: 'Mazur\'s Peer Instruction method with clickers or raised hands.'
+    short: 'Students learn by explaining ideas to and evaluating the work of their classmates.',
+    detail: 'Students discuss their answers, challenge reasoning, give feedback, and correct misunderstandings together.',
+    example: 'Students answer a conceptual question individually, discuss their answer with a partner, and then answer again.'
   },
   'collaborative_learning': {
     title: 'Collaborative & Team Learning',
-    short: 'Students work together in small groups towards a shared academic goal.',
-    detail: 'Fosters team communication and collective problem solving by assigning specific group roles or team deliverables.',
-    example: 'Group assignment requiring a joint technical report and presentation.'
+    short: 'Students work together in small groups to achieve a shared learning goal.',
+    detail: 'Assign group tasks where students discuss, divide responsibilities, share knowledge, and produce something together.',
+    example: 'Groups analyse a case study and jointly present their solution to the class.'
   },
   'problem_based_learning': {
     title: 'Problem-Based Learning (PBL)',
-    short: 'Learning centered around solving open-ended, real-world problems.',
-    detail: 'Students are given a realistic engineering scenario or case study before learning the theory, driving their own need to discover the underlying concepts.',
-    example: '"Design a flood-warning sensor network for a river prone to overflowing."'
+    short: 'Students learn by trying to solve a realistic, open-ended problem.',
+    detail: 'Start with a problem rather than first teaching all the theory. Students identify what they need to learn, research it, and use their findings to develop a solution.',
+    example: 'Give students a real-world engineering failure and ask them to determine why it happened and how to prevent it.'
   },
   'project_based_learning': {
     title: 'Project-Based Learning (PjBL)',
-    short: 'Long-term extended projects resulting in a functional prototype or product.',
-    detail: 'Students work over several weeks or a full semester to produce a working system, prototype, software application, or hardware model.',
-    example: 'Semester-long capstone project building an autonomous robot.'
+    short: 'Students learn by working on a substantial project that results in a real product, solution, or outcome.',
+    detail: 'The project usually takes multiple classes or weeks and combines several skills or concepts.',
+    example: 'Students design and build a working IoT system while applying programming, electronics, and data analysis.'
   },
   'inquiry_learning': {
     title: 'Inquiry & Investigation',
-    short: 'Students pose questions, conduct research, and gather evidence to form conclusions.',
-    detail: 'Emphasizes curiosity and analytical investigation. Students analyze raw datasets or conduct experiments to formulate hypotheses.',
-    example: 'Analyzing traffic flow dataset to discover bottlenecks without prior solutions given.'
+    short: 'Students learn by asking questions, investigating evidence, and discovering or testing explanations.',
+    detail: 'Instead of immediately giving the answer, encourage students to formulate questions, collect information, conduct experiments, and draw conclusions.',
+    example: 'Ask students why a particular material fails under certain conditions and have them design an experiment to investigate it.'
   },
   'flipped_classroom': {
     title: 'Flipped Classroom',
-    short: 'Direct content is reviewed at home; in-class time is spent on application and discussion.',
-    detail: 'Students watch video lectures or read course materials prior to class. Lecture hours are then dedicated exclusively to solving hard problems and Q&A.',
-    example: 'Reading Chapter 4 before class so class time is spent entirely on problem solving.'
+    short: 'Students learn basic content before class, and class time is used for application and discussion.',
+    detail: 'Provide videos, readings, or other material for students to study beforehand. During class, focus on solving problems, activities, discussions, and addressing difficulties.',
+    example: 'Students watch a 15-minute lecture video before class; classroom time is then spent solving problems with your guidance.'
   },
   'reflective_learning': {
     title: 'Reflective & Metacognitive Learning',
-    short: 'Students analyze their own learning process, mistakes, and problem-solving strategies.',
-    detail: 'Encourages self-awareness by having students write short learning reflection logs or post-exam diagnostic analyses.',
-    example: 'Writing a 3-sentence summary of "What was hardest to understand today and why?".'
+    short: 'Students consciously think about how they learn, what they understand, and where they need improvement.',
+    detail: 'Ask students to reflect on their reasoning, mistakes, strategies, and progress.',
+    example: 'After an assignment, ask students: "What did you find difficult?", "What mistake did you make?", and "What would you do differently next time?"'
   },
 
   // Ratings & Dimensions
