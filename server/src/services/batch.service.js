@@ -87,3 +87,21 @@ export function getCompulsorySemesters(batchYear) {
 export function isRvceEmail(email) {
   return email && email.toLowerCase().endsWith('@rvce.edu.in');
 }
+
+/**
+ * Check if an RVCE email belongs to a teacher (faculty).
+ *
+ * Students have dept+year patterns in their email:
+ *   - USN format:   1rv24ai042@rvce.edu.in
+ *   - Named format: chiragh.ai24@rvce.edu.in
+ *
+ * Teachers have plain emails with no dept/year code:
+ *   - somesh@rvce.edu.in
+ *   - rajesh.rm@rvce.edu.in
+ *
+ * Logic: if extractUsnYear() returns null AND it's an RVCE email → teacher.
+ */
+export function isTeacherEmail(email) {
+  if (!isRvceEmail(email)) return false;
+  return extractUsnYear(email) === null;
+}

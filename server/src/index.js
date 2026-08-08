@@ -9,6 +9,7 @@ import authRoutes from './routes/auth.js';
 import onboardingRoutes from './routes/onboarding.js';
 import subjectsRoutes from './routes/subjects.js';
 import surveyRoutes from './routes/survey.js';
+import teacherRoutes from './routes/teacher.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -32,6 +33,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/onboarding', onboardingRoutes);
 app.use('/api/subjects', subjectsRoutes);
 app.use('/api/survey', surveyRoutes);
+app.use('/api/teacher', teacherRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

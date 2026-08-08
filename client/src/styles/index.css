@@ -1733,3 +1733,63 @@ textarea.input-field {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ========================================
+   TEACHER FLOW STYLES
+   ======================================== */
+
+.rating-options {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.rating-chip {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-card-bg);
+  color: var(--color-text-main);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rating-chip:hover {
+  border-color: var(--color-accent);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.rating-chip.active {
+  background: var(--color-accent);
+  color: white;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+}
+
+.checkbox-option-card {
+  transition: all 0.2s ease;
+}
+
+.checkbox-option-card:hover {
+  border-color: var(--color-accent) !important;
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.chat-window {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+}
+
+.chat-bubble {
+  animation: fadeIn 0.3s ease forwards;
+  line-height: 1.5;
+}
+
+.chat-bubble.typing {
+  animation: pulse 1.5s infinite;
+}
+

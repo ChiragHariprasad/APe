@@ -55,14 +55,14 @@ export const api = {
   getMe: () => request('GET', '/auth/me'),
   logout: () => request('POST', '/auth/logout'),
 
-  // Onboarding
+  // Student Onboarding
   submitLateralEntry: (isLateralEntry) => request('POST', '/onboarding/lateral-entry', { isLateralEntry }),
   getBatchInfo: () => request('GET', '/onboarding/batch-info'),
 
-  // Subjects
+  // Student Subjects
   getSubjects: () => request('GET', '/subjects'),
 
-  // Survey
+  // Student Survey
   startSurvey: (subjectId) => request('POST', '/survey/start', { subjectId }),
   getSession: (sessionId) => request('GET', `/survey/${sessionId}`),
   saveAnswer: (sessionId, questionIndex, rating) =>
@@ -77,6 +77,21 @@ export const api = {
   },
   submitSurvey: (sessionId) => request('POST', `/survey/${sessionId}/submit`),
   getProgress: () => request('GET', '/survey/progress/all'),
+
+  // Teacher Endpoints
+  submitTeacherOnboarding: (data) => request('POST', '/teacher/onboarding', data),
+  getTeacherCourses: () => request('GET', '/teacher/courses'),
+  selectTeacherCourses: (subjectIds) => request('POST', '/teacher/courses/select', { subjectIds }),
+  getTeacherDashboard: () => request('GET', '/teacher/dashboard'),
+  saveTeacherT1: (teacherCourseId, data) => request('PUT', `/teacher/survey/${teacherCourseId}/t1`, data),
+  saveTeacherT2: (teacherCourseId, data) => request('PUT', `/teacher/survey/${teacherCourseId}/t2`, data),
+  sendInterviewAnswer: (teacherCourseId, answer, question = '') =>
+    request('POST', `/teacher/survey/${teacherCourseId}/interview`, { answer, question }),
+  getInterviewState: (teacherCourseId) => request('GET', `/teacher/survey/${teacherCourseId}/interview`),
+  getMismatchScenario: (teacherCourseId) => request('GET', `/teacher/survey/${teacherCourseId}/mismatch`),
+  saveTeacherT3: (teacherCourseId, data) => request('POST', `/teacher/survey/${teacherCourseId}/t3`, data),
+  submitTeacherSurvey: (teacherCourseId) => request('POST', `/teacher/survey/${teacherCourseId}/submit`),
+  savePostEvaluation: (teacherCourseId, data) => request('POST', `/teacher/evaluation/${teacherCourseId}`, data),
 
   // Token management
   setToken,

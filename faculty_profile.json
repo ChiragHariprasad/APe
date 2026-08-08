@@ -1,0 +1,59 @@
+{
+  "intake": {
+    "background": "9 years, UG, both, 120",
+    "style": "B",
+    "lecture_pct": "C",
+    "activities": [
+      "discussions",
+      "group work",
+      "presentations",
+      "quizzes"
+    ],
+    "blocker": "TIme",
+    "blocker_severity": 4,
+    "capability_confidence": 2,
+    "interest": 4,
+    "edtech_comfort": 3,
+    "course_code": "AI244AI",
+    "course_subject": "Artificial Intelligence and Machine Learning"
+  },
+  "interview_profile": {
+    "teaching_practice": {
+      "value": "activity methods hard to run",
+      "confidence": 0.88
+    },
+    "constraints": {
+      "value": "TIme",
+      "confidence": 0.79
+    },
+    "capability": {
+      "value": "confident lecture-based",
+      "confidence": 0.68
+    },
+    "interest": {
+      "value": "self-rated 4/5 interest in new methods",
+      "confidence": 0.67
+    },
+    "assessment": {
+      "value": "surprise pop quizzes",
+      "confidence": 0.78
+    },
+    "philosophy": {
+      "value": "student understanding of topics",
+      "confidence": 0.89
+    },
+    "technology": {
+      "value": "self-rated 3/5 ed-tech/AI comfort",
+      "confidence": 0.59
+    },
+    "context": {
+      "value": "Artificial Intelligence and Machine Learning (AI244AI)",
+      "confidence": 0.95
+    },
+    "evidence": {
+      "value": "debate: mixed effectiveness",
+      "confidence": 0.75
+    },
+    "_conflicts_flagged": []
+  }
+}
