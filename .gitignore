@@ -1,0 +1,19 @@
+# Dependencies
+**/node_modules/
+
+# Environment files
+**/.env
+**/.env.*
+
+# Build output
+client/dist/
+dist/
+
+# Logs & temp exports
+1.txt
+Core.pdf
+generated_models.md
+model_comparison.md 
+model_decs.md
+neon_database_export.xlsx
+uploads/
