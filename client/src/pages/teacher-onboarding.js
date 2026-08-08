@@ -1,19 +1,24 @@
 /**
- * Teacher Onboarding Page
- * Step 1: Teacher Dispositional Profile (Years teaching, Level, Mode, Confidence, Interest, Tech Comfort)
- * Step 2: Course Selection (Select courses handled across semesters)
+ * Teacher Onboarding Page — Enhanced UI/UX with Info Explainers & Step Progress Stepper
+ * Step 1: Teacher Dispositional Profile (Years teaching, Level, Mode, Capability, Interest, Tech Comfort)
+ * Step 2: Course Selection (Select courses handled across semesters with search & tab filters)
  */
 
 import { api } from '../services/api.js';
 import { showToast } from '../components/toast.js';
+import { createInfoButton } from '../components/explainer-modal.js';
 
 let currentStep = 1; // 1: Profile, 2: Course Selection
 let teacherProfileData = {};
 let availableCoursesGrouped = {};
 let selectedSubjectIds = new Set();
+let searchQuery = '';
+let activeTabFilter = 'ALL';
 
 export async function renderTeacherOnboardingPage(container, user) {
   currentStep = 1;
+  searchQuery = '';
+  activeTabFilter = 'ALL';
   teacherProfileData = {
     yearsTeaching: 5,
     level: 'UG',
@@ -28,7 +33,7 @@ export async function renderTeacherOnboardingPage(container, user) {
   container.innerHTML = `
     <div class="loading-page">
       <div class="spinner"></div>
-      <p>Loading teacher onboarding...</p>
+      <p>Loading faculty setup portal...</p>
     </div>
   `;
 
@@ -39,7 +44,7 @@ export async function renderTeacherOnboardingPage(container, user) {
   } catch (err) {
     container.innerHTML = `
       <div class="loading-page">
-        <p style="color: var(--color-error);">Failed to load course list: ${err.message}</p>
+        <p style="color: var(--color-error);">Failed to load course catalog: ${err.message}</p>
         <button class="btn btn-primary" onclick="location.reload()">Retry</button>
       </div>
     `;
@@ -54,27 +59,48 @@ function renderStep(container, user) {
   }
 }
 
+function renderStepperHeader(activeStepNum) {
+  return `
+    <div class="stage-stepper-bar" style="margin-bottom:24px;">
+      <div class="stage-step ${activeStepNum === 1 ? 'active' : 'completed'}">
+        <span class="stage-step-num">${activeStepNum > 1 ? '✓' : '1'}</span>
+        <span>Step 1: Faculty Profile</span>
+      </div>
+      <div style="color:var(--color-text-muted); font-size:12px;">➔</div>
+      <div class="stage-step ${activeStepNum === 2 ? 'active' : ''}">
+        <span class="stage-step-num">2</span>
+        <span>Step 2: Select Courses</span>
+      </div>
+    </div>
+  `;
+}
+
 function renderProfileStep(container, user) {
   container.innerHTML = `
     <div class="onboarding-page page-enter">
-      <div class="glass-card onboarding-card" style="max-width: 650px; width: 100%;">
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom: 20px;">
-          <img src="/logo.png" style="width:36px; height:36px;" alt="Logo" />
-          <div>
-            <h2 style="margin:0; font-size:20px; font-weight:700; color:var(--color-text-main);">Teacher Profile</h2>
-            <div style="font-size:13px; color:var(--color-text-muted);">Welcome ${user?.displayName || 'Professor'}! Please set up your profile.</div>
+      <div class="glass-card onboarding-card" style="max-width: 720px; width: 100%; padding:32px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <img src="/logo.png" style="width:40px; height:40px;" alt="Logo" />
+            <div>
+              <h2 style="margin:0; font-size:22px; font-weight:800; color:var(--color-text-primary);">Faculty Onboarding Profile</h2>
+              <div style="font-size:13px; color:var(--color-text-muted);">Welcome Professor ${user?.displayName || ''}! Let's set up your teaching baseline.</div>
+            </div>
           </div>
+          <span class="badge" style="background:var(--color-accent-glow); color:var(--color-text-accent); padding:4px 10px; font-weight:700;">Stage T1 Setup</span>
         </div>
 
+        ${renderStepperHeader(1)}
+
         <form id="teacher-profile-form" class="teacher-form">
-          <div class="form-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+          <div class="form-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
             <div class="form-group">
-              <label class="form-label">Years of Teaching Experience</label>
+              <label class="form-label" id="lbl-exp">Years of Teaching Experience</label>
               <input type="number" name="yearsTeaching" min="0" max="50" value="${teacherProfileData.yearsTeaching}" class="form-input" required />
             </div>
 
             <div class="form-group">
-              <label class="form-label">Teaching Level</label>
+              <label class="form-label" id="lbl-level">Teaching Level</label>
               <select name="level" class="form-input" required>
                 <option value="UG" ${teacherProfileData.level === 'UG' ? 'selected' : ''}>Undergraduate (UG)</option>
                 <option value="PG" ${teacherProfileData.level === 'PG' ? 'selected' : ''}>Postgraduate (PG)</option>
@@ -83,56 +109,76 @@ function renderProfileStep(container, user) {
             </div>
 
             <div class="form-group">
-              <label class="form-label">Primary Teaching Mode</label>
+              <label class="form-label" id="lbl-mode">Primary Teaching Mode</label>
               <select name="mode" class="form-input" required>
-                <option value="theory" ${teacherProfileData.mode === 'theory' ? 'selected' : ''}>Theory</option>
-                <option value="lab" ${teacherProfileData.mode === 'lab' ? 'selected' : ''}>Lab / Practical</option>
+                <option value="theory" ${teacherProfileData.mode === 'theory' ? 'selected' : ''}>Theory Lectures</option>
+                <option value="lab" ${teacherProfileData.mode === 'lab' ? 'selected' : ''}>Lab / Practical Sessions</option>
                 <option value="both" ${teacherProfileData.mode === 'both' ? 'selected' : ''}>Both Theory & Lab</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Average Class Size</label>
+              <label class="form-label" id="lbl-size">Average Class Size</label>
               <input type="number" name="avgClassSize" min="5" max="300" value="${teacherProfileData.avgClassSize}" class="form-input" required />
             </div>
           </div>
 
-          <hr style="border:0; border-top:1px solid var(--color-border); margin:20px 0;" />
+          <hr style="border:0; border-top:1px solid var(--color-border); margin:24px 0;" />
 
-          <div style="margin-bottom:16px;">
-            <label class="form-label">Self-Assessed Capability in Active/Interactive Pedagogies (1-5)</label>
+          <div style="margin-bottom:20px;">
+            <label class="form-label" id="lbl-capability">Self-Assessed Capability in Interactive Pedagogies (1-5)</label>
             <div class="rating-options" data-field="capabilityConfidence">
               ${[1,2,3,4,5].map(v => `
-                <button type="button" class="rating-chip ${teacherProfileData.capabilityConfidence === v ? 'active' : ''}" data-val="${v}">${v}</button>
+                <button type="button" class="rating-chip ${teacherProfileData.capabilityConfidence === v ? 'active' : ''}" data-val="${v}">
+                  ${v} ${v===1?'(Basic)':v===3?'(Moderate)':v===5?'(Expert)':''}
+                </button>
               `).join('')}
             </div>
           </div>
 
-          <div style="margin-bottom:16px;">
-            <label class="form-label">Interest in Trying New Teaching Methods (1-5)</label>
+          <div style="margin-bottom:20px;">
+            <label class="form-label" id="lbl-interest">Interest in Trying New Teaching Methods (1-5)</label>
             <div class="rating-options" data-field="interestNewMethods">
               ${[1,2,3,4,5].map(v => `
-                <button type="button" class="rating-chip ${teacherProfileData.interestNewMethods === v ? 'active' : ''}" data-val="${v}">${v}</button>
+                <button type="button" class="rating-chip ${teacherProfileData.interestNewMethods === v ? 'active' : ''}" data-val="${v}">
+                  ${v} ${v===1?'(Low)':v===3?'(Open)':v===5?'(Eager)':''}
+                </button>
               `).join('')}
             </div>
           </div>
 
-          <div style="margin-bottom:24px;">
-            <label class="form-label">EdTech & Digital Tool Comfort (1-5)</label>
+          <div style="margin-bottom:28px;">
+            <label class="form-label" id="lbl-tech">EdTech & Digital Tool Comfort (1-5)</label>
             <div class="rating-options" data-field="edtechComfort">
               ${[1,2,3,4,5].map(v => `
-                <button type="button" class="rating-chip ${teacherProfileData.edtechComfort === v ? 'active' : ''}" data-val="${v}">${v}</button>
+                <button type="button" class="rating-chip ${teacherProfileData.edtechComfort === v ? 'active' : ''}" data-val="${v}">
+                  ${v} ${v===1?'(Novice)':v===3?'(Comfortable)':v===5?'(Advanced)':''}
+                </button>
               `).join('')}
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary" style="width:100%;">Next: Select Courses →</button>
+          <button type="submit" class="btn btn-primary" style="width:100%; min-height:48px; font-weight:700;">Next: Select Courses →</button>
         </form>
       </div>
     </div>
   `;
 
-  // Attach rating chip handlers
+  // Attach info buttons (i)
+  const attachInfo = (id, key, title, text) => {
+    const el = container.querySelector(`#${id}`);
+    if (el) el.appendChild(createInfoButton(key, title, text));
+  };
+
+  attachInfo('lbl-exp', 't1', 'Teaching Experience', 'Total number of years spent teaching in higher education.');
+  attachInfo('lbl-level', 't1', 'Teaching Level', 'Target student audience level (Undergraduate or Postgraduate).');
+  attachInfo('lbl-mode', 't1', 'Teaching Mode', 'Primary classroom delivery format (Theory or Laboratory).');
+  attachInfo('lbl-size', 'constraints', 'Class Size', 'Average number of students enrolled per section.');
+  attachInfo('lbl-capability', 'capability_confidence', 'Capability Confidence', 'Self-assessed confidence in designing and running interactive activities.');
+  attachInfo('lbl-interest', 'willingness_change', 'Interest in New Methods', 'Openness to adopting innovative teaching strategies.');
+  attachInfo('lbl-tech', 't1', 'EdTech Comfort', 'Familiarity with LMS, online polling, and digital educational tools.');
+
+  // Rating chip handlers
   container.querySelectorAll('.rating-options').forEach(group => {
     const field = group.dataset.field;
     group.querySelectorAll('.rating-chip').forEach(btn => {
@@ -163,41 +209,58 @@ function renderCourseSelectionStep(container, user) {
 
   container.innerHTML = `
     <div class="onboarding-page page-enter">
-      <div class="glass-card onboarding-card" style="max-width: 800px; width: 100%;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <div class="glass-card onboarding-card" style="max-width: 880px; width: 100%; padding:32px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
           <div>
-            <h2 style="margin:0; font-size:20px; font-weight:700; color:var(--color-text-main);">Select Your Courses</h2>
-            <div style="font-size:13px; color:var(--color-text-muted);">Choose all theory & lab courses you are currently handling across semesters</div>
+            <h2 style="margin:0; font-size:22px; font-weight:800; color:var(--color-text-primary);">Select Your Courses</h2>
+            <div style="font-size:13px; color:var(--color-text-muted);">Choose the courses you handle across theory and laboratory subjects</div>
           </div>
-          <button type="button" class="btn btn-ghost btn-sm" id="back-to-step1">← Back</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="back-to-step1">← Back to Profile</button>
         </div>
 
-        <div class="courses-selector-container" style="max-height: 450px; overflow-y: auto; padding-right: 8px; margin-bottom: 24px;">
+        ${renderStepperHeader(2)}
+
+        <!-- Search & Filter Bar -->
+        <div style="display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap;">
+          <input type="text" id="course-search-input" class="form-input" placeholder="🔍 Search course code or name..." value="${searchQuery}" style="flex:1; min-width:240px;" />
+          <button type="button" class="btn btn-ghost btn-sm" id="select-all-btn" style="border:1px solid var(--color-border-accent); color:var(--color-text-accent);">Select All Visible</button>
+        </div>
+
+        <div class="courses-selector-container" style="max-height: 480px; overflow-y: auto; padding-right: 8px; margin-bottom: 24px;">
           ${groupKeys.map(groupName => {
-            const subjects = availableCoursesGrouped[groupName];
+            const subjects = availableCoursesGrouped[groupName].filter(s => {
+              if (!searchQuery) return true;
+              const q = searchQuery.toLowerCase();
+              return s.subjectCode.toLowerCase().includes(q) || s.subjectName.toLowerCase().includes(q);
+            });
+
+            if (subjects.length === 0) return '';
+
             return `
-              <div class="course-group-block" style="margin-bottom: 20px;">
-                <div style="font-size:14px; font-weight:700; color:var(--color-accent); margin-bottom:10px; border-bottom:1px solid var(--color-border); padding-bottom:4px;">
-                  ${groupName}
+              <div class="course-group-block" style="margin-bottom: 24px;">
+                <div style="font-size:14px; font-weight:700; color:var(--color-accent); margin-bottom:12px; border-bottom:1px solid var(--color-border); padding-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                  <span>${groupName}</span>
+                  <span style="font-size:11px; color:var(--color-text-muted);">${subjects.length} subjects available</span>
                 </div>
-                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap:12px;">
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap:14px;">
                   ${subjects.map(s => {
                     const isChecked = selectedSubjectIds.has(s.id);
                     const facultyText = Array.isArray(s.faculty) && s.faculty.length > 0 ? s.faculty.join(', ') : 'Faculty unassigned';
                     return `
                       <label class="course-checkbox-card ${isChecked ? 'selected' : ''}" data-subject-id="${s.id}" style="
-                        display:flex; align-items:flex-start; gap:12px; padding:12px; border-radius:10px;
+                        display:flex; align-items:flex-start; gap:14px; padding:14px; border-radius:12px;
                         border: 1px solid ${isChecked ? 'var(--color-accent)' : 'var(--color-border)'};
-                        background: ${isChecked ? 'rgba(99, 102, 241, 0.08)' : 'var(--color-card-bg)'};
-                        cursor: pointer; transition: all 0.2s ease;
+                        background: ${isChecked ? 'var(--color-accent-glow)' : 'var(--color-bg-card)'};
+                        cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                        box-shadow: ${isChecked ? '0 4px 14px var(--color-accent-glow)' : 'none'};
                       ">
-                        <input type="checkbox" value="${s.id}" ${isChecked ? 'checked' : ''} style="margin-top:3px; cursor:pointer;" />
+                        <input type="checkbox" value="${s.id}" ${isChecked ? 'checked' : ''} style="margin-top:4px; cursor:pointer; width:18px; height:18px; accent-color:var(--color-accent);" />
                         <div style="flex:1;">
-                          <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:12px; font-weight:700; color:var(--color-accent);">${s.subjectCode}</span>
+                          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <span style="font-size:12px; font-weight:800; color:var(--color-accent);">${s.subjectCode}</span>
                             <span class="badge badge-pedagogy" style="font-size:10px;">${s.pedagogyId}</span>
                           </div>
-                          <div style="font-size:14px; font-weight:600; color:var(--color-text-main); margin:4px 0;">${s.subjectName}</div>
+                          <div style="font-size:14px; font-weight:700; color:var(--color-text-primary); margin-bottom:4px; line-height:1.3;">${s.subjectName}</div>
                           <div style="font-size:11px; color:var(--color-text-muted);">${facultyText}</div>
                         </div>
                       </label>
@@ -209,11 +272,11 @@ function renderCourseSelectionStep(container, user) {
           }).join('')}
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <div style="font-size:13px; color:var(--color-text-muted);">
-            <strong id="selected-count">${selectedSubjectIds.size}</strong> course(s) selected
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; border-top:1px solid var(--color-border); padding-top:20px;">
+          <div style="font-size:14px; color:var(--color-text-secondary);">
+            Selected: <strong id="selected-count" style="color:var(--color-accent); font-size:16px;">${selectedSubjectIds.size}</strong> course(s)
           </div>
-          <button type="button" id="complete-onboarding-btn" class="btn btn-primary" ${selectedSubjectIds.size === 0 ? 'disabled' : ''}>
+          <button type="button" id="complete-onboarding-btn" class="btn btn-primary" style="min-height:48px; padding:0 28px; font-weight:700;" ${selectedSubjectIds.size === 0 ? 'disabled' : ''}>
             Complete Setup & Go to Dashboard →
           </button>
         </div>
@@ -221,13 +284,29 @@ function renderCourseSelectionStep(container, user) {
     </div>
   `;
 
+  // Search input handler
+  const searchInput = container.querySelector('#course-search-input');
+  searchInput.addEventListener('input', (e) => {
+    searchQuery = e.target.value;
+    renderCourseSelectionStep(container, user);
+  });
+
+  // Select all visible
+  container.querySelector('#select-all-btn').addEventListener('click', () => {
+    container.querySelectorAll('.course-checkbox-card input[type="checkbox"]').forEach(cb => {
+      cb.checked = true;
+      selectedSubjectIds.add(cb.value);
+    });
+    renderCourseSelectionStep(container, user);
+  });
+
   // Back button
   container.querySelector('#back-to-step1').addEventListener('click', () => {
     currentStep = 1;
     renderStep(container, user);
   });
 
-  // Checkbox handlers
+  // Checkbox card click handlers
   container.querySelectorAll('.course-checkbox-card').forEach(card => {
     const cb = card.querySelector('input[type="checkbox"]');
     card.addEventListener('click', (e) => {
@@ -235,12 +314,8 @@ function renderCourseSelectionStep(container, user) {
       const id = card.dataset.subjectId;
       if (cb.checked) {
         selectedSubjectIds.add(id);
-        card.style.borderColor = 'var(--color-accent)';
-        card.style.background = 'rgba(99, 102, 241, 0.08)';
       } else {
         selectedSubjectIds.delete(id);
-        card.style.borderColor = 'var(--color-border)';
-        card.style.background = 'var(--color-card-bg)';
       }
       container.querySelector('#selected-count').textContent = selectedSubjectIds.size;
       const submitBtn = container.querySelector('#complete-onboarding-btn');
@@ -251,11 +326,8 @@ function renderCourseSelectionStep(container, user) {
   // Complete onboarding
   container.querySelector('#complete-onboarding-btn').addEventListener('click', async () => {
     try {
-      showToast('Saving profile...', 'info');
-      // 1. Submit teacher onboarding profile
+      showToast('Saving profile & setup...', 'info');
       await api.submitTeacherOnboarding(teacherProfileData);
-
-      // 2. Submit selected courses
       await api.selectTeacherCourses(Array.from(selectedSubjectIds));
 
       showToast('Teacher onboarding complete!', 'success');

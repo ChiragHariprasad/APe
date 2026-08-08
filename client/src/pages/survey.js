@@ -4,6 +4,7 @@
 
 import { api } from '../services/api.js';
 import { showToast } from '../components/toast.js';
+import { createInfoButton } from '../components/explainer-modal.js';
 
 let currentSession = null;
 let currentQuestionIndex = 0;
@@ -97,7 +98,9 @@ function renderLikertQuestion(question) {
 
   return `
     <div class="question-number">Question ${question.index + 1} of 10 · Pedagogy Assessment</div>
-    <div class="question-text">"${question.text}"</div>
+    <div class="question-text" id="q-text-${question.index}">
+      "${question.text}"
+    </div>
 
     <div class="likert-scale" id="likert-scale">
       ${[1, 2, 3, 4, 5].map(rating => `
@@ -129,7 +132,9 @@ function renderOpenEndedQuestion(question) {
 
   return `
     <div class="question-number">Open-Ended Question ${question.index - 9} of 2</div>
-    <div class="question-text">"${question.text}"</div>
+    <div class="question-text" id="q-text-${question.index}">
+      "${question.text}"
+    </div>
 
     <div class="open-ended-container">
       <div class="response-section">
@@ -182,6 +187,16 @@ function renderOpenEndedQuestion(question) {
 
 function attachSurveyListeners(container) {
   const question = currentSession.questions[currentQuestionIndex];
+
+  // Attach info explainer (i) button to question text
+  const qEl = container.querySelector(`#q-text-${question.index}`);
+  if (qEl) {
+    qEl.appendChild(createInfoButton(
+      'pes',
+      'Student Feedback Question',
+      'Rate your experience regarding active participation, teacher clarity, or learning engagement in this course.'
+    ));
+  }
 
   // Save & Exit
   document.getElementById('survey-exit')?.addEventListener('click', () => {
