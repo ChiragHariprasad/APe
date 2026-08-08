@@ -58,12 +58,15 @@ router.get('/me', authenticateToken, async (req, res) => {
       return res.status(404).json({ error: 'NOT_FOUND', message: 'User not found.' });
     }
 
+    const isDev = user.email ? ['manoj.ai23@rvce.edu.in', 'chiragh.ai24@rvce.edu.in'].includes(user.email.toLowerCase().trim()) : false;
+
     const base = {
       id: user.id,
       email: user.email,
       displayName: user.display_name,
       avatarUrl: user.avatar_url,
       role,
+      isDev,
     };
 
     if (role === 'teacher') {

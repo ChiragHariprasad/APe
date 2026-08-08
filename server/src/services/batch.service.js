@@ -88,6 +88,11 @@ export function isRvceEmail(email) {
   return email && email.toLowerCase().endsWith('@rvce.edu.in');
 }
 
+const DEV_TEACHER_EMAILS = [
+  'manoj.ai23@rvce.edu.in',
+  'chiragh.ai24@rvce.edu.in',
+];
+
 /**
  * Check if an RVCE email belongs to a teacher (faculty).
  *
@@ -99,9 +104,15 @@ export function isRvceEmail(email) {
  *   - somesh@rvce.edu.in
  *   - rajesh.rm@rvce.edu.in
  *
- * Logic: if extractUsnYear() returns null AND it's an RVCE email → teacher.
+ * Dev exceptions: manoj.ai23@rvce.edu.in, chiragh.ai24@rvce.edu.in
  */
 export function isTeacherEmail(email) {
   if (!isRvceEmail(email)) return false;
+  const normalized = email.toLowerCase().trim();
+  if (DEV_TEACHER_EMAILS.includes(normalized)) return true;
   return extractUsnYear(email) === null;
+}
+
+export function isDevEmail(email) {
+  return email && DEV_TEACHER_EMAILS.includes(email.toLowerCase().trim());
 }

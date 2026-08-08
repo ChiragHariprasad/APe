@@ -53,6 +53,11 @@ function renderDashboard(container, user, data) {
                 ? `<img src="${user.avatarUrl}" alt="" class="header-avatar" referrerpolicy="no-referrer" />`
                 : `<div class="header-avatar" style="background: var(--color-accent); display:flex; align-items:center; justify-content:center; font-size:14px; color:white;">${(user?.displayName || '?')[0]}</div>`
               }
+              ${(user?.isDev || ['manoj.ai23@rvce.edu.in', 'chiragh.ai24@rvce.edu.in'].includes(user?.email)) ? `
+                <button class="btn btn-ghost btn-sm" id="switch-view-btn" style="color:var(--color-accent); border:1px solid var(--color-accent); font-size:12px;">
+                  🔄 Switch to Teacher View
+                </button>
+              ` : ''}
               <button class="btn btn-ghost btn-icon" id="logout-btn" title="Logout">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
               </button>
@@ -89,6 +94,11 @@ function renderDashboard(container, user, data) {
         detail: { page: 'survey', subjectId }
       }));
     }
+  });
+
+  // Switch view for dev
+  document.getElementById('switch-view-btn')?.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'teacher-dashboard' } }));
   });
 
   // Logout
