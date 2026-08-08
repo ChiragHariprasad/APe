@@ -9,7 +9,7 @@
 
 import { api } from '../services/api.js';
 import { showToast } from '../components/toast.js';
-import { createInfoButton } from '../components/explainer-modal.js';
+import { createInfoButton, showExplainerModal } from '../components/explainer-modal.js';
 
 const PEDAGOGY_OPTIONS = [
   { id: 'direct_instruction', label: 'Direct Instruction / Explicit Teaching' },
@@ -41,6 +41,153 @@ const WILLING_CHANGE_OPTIONS = [
   'Assessment & grading format',
   'EdTech & digital tools integration',
 ];
+
+// ── Pedagogy Explainer Dictionary for Hover Tooltips ─────────
+const PEDAGOGY_EXPLAINERS = {
+  direct_instruction: {
+    title: 'Direct Instruction / Explicit Teaching',
+    short: 'You explain and demonstrate the concept directly.',
+    detail: 'The teacher leads the lesson, presents the material step-by-step, demonstrates how to solve problems, and then gives students practice.',
+    example: 'You teach a concept on the board, work through 2–3 examples, and then students solve similar questions.'
+  },
+  guided_instruction: {
+    title: 'Guided Instruction & Scaffolding',
+    short: 'You guide students through a task while gradually reducing your support.',
+    detail: 'Break a difficult concept into smaller steps, provide hints, examples, templates, or questions, and slowly let students work independently.',
+    example: 'First solve a problem together, then solve one with hints, and finally ask students to solve one on their own.'
+  },
+  active_learning: {
+    title: 'Active Learning & Engagement',
+    short: 'Students learn by actively doing something rather than only listening.',
+    detail: 'Use questions, discussions, quizzes, demonstrations, problem-solving activities, or short exercises during the lesson.',
+    example: 'Instead of lecturing for an hour, pause every 10–15 minutes for students to answer a question or solve a problem.'
+  },
+  peer_instruction: {
+    title: 'Peer Instruction & Critique',
+    short: 'Students learn by explaining ideas to and evaluating the work of their classmates.',
+    detail: 'Students discuss their answers, challenge reasoning, give feedback, and correct misunderstandings together.',
+    example: 'Students answer a conceptual question individually, discuss their answer with a partner, and then answer again.'
+  },
+  collaborative_learning: {
+    title: 'Collaborative & Team Learning',
+    short: 'Students work together in small groups to achieve a shared learning goal.',
+    detail: 'Assign group tasks where students discuss, divide responsibilities, share knowledge, and produce something together.',
+    example: 'Groups analyse a case study and jointly present their solution to the class.'
+  },
+  problem_based_learning: {
+    title: 'Problem-Based Learning (PBL)',
+    short: 'Students learn by trying to solve a realistic, open-ended problem.',
+    detail: 'Start with a problem rather than first teaching all the theory. Students identify what they need to learn, research it, and use their findings to develop a solution.',
+    example: 'Give students a real-world engineering failure and ask them to determine why it happened and how to prevent it.'
+  },
+  project_based_learning: {
+    title: 'Project-Based Learning (PjBL)',
+    short: 'Students learn by working on a substantial project that results in a real product, solution, or outcome.',
+    detail: 'The project usually takes multiple classes or weeks and combines several skills or concepts.',
+    example: 'Students design and build a working IoT system while applying programming, electronics, and data analysis.'
+  },
+  inquiry_learning: {
+    title: 'Inquiry & Investigation',
+    short: 'Students learn by asking questions, investigating evidence, and discovering or testing explanations.',
+    detail: 'Instead of immediately giving the answer, encourage students to formulate questions, collect information, conduct experiments, and draw conclusions.',
+    example: 'Ask students why a particular material fails under certain conditions and have them design an experiment to investigate it.'
+  },
+  flipped_classroom: {
+    title: 'Flipped Classroom',
+    short: 'Students learn basic content before class, and class time is used for application and discussion.',
+    detail: 'Provide videos, readings, or other material for students to study beforehand. During class, focus on solving problems, activities, discussions, and addressing difficulties.',
+    example: 'Students watch a 15-minute lecture video before class; classroom time is then spent solving problems with your guidance.'
+  },
+  reflective_learning: {
+    title: 'Reflective & Metacognitive Learning',
+    short: 'Students consciously think about how they learn, what they understand, and where they need improvement.',
+    detail: 'Ask students to reflect on their reasoning, mistakes, strategies, and progress.',
+    example: 'After an assignment, ask students: "What did you find difficult?", "What mistake did you make?", and "What would you do differently next time?"'
+  }
+};
+
+// ── Shared Hover Tooltip for Pedagogy (i) Buttons ────────────
+let _hoverTooltipEl = null;
+let _hoverHideTimer = null;
+
+function showPedagogyTooltip(key, triggerEl) {
+  const info = PEDAGOGY_EXPLAINERS[key];
+  if (!info) return;
+
+  // Remove any existing tooltip
+  hidePedagogyTooltip();
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'pedagogy-hover-tooltip';
+  tooltip.innerHTML = `
+    <div class="tooltip-badge">PEDAGOGY EXPLAINER</div>
+    <p class="tooltip-title">${info.title}</p>
+    <p class="tooltip-short">${info.short}</p>
+    <p class="tooltip-detail">${info.detail}</p>
+    ${info.example ? `<div class="tooltip-example"><strong>Example:</strong> ${info.example}</div>` : ''}
+  `;
+  document.body.appendChild(tooltip);
+  _hoverTooltipEl = tooltip;
+
+  // Position near the trigger
+  const rect = triggerEl.getBoundingClientRect();
+  const tw = 340;
+  const th = tooltip.offsetHeight || 200;
+
+  let left = rect.left + (rect.width / 2) - (tw / 2);
+  let top = rect.bottom + 8;
+
+  // If below overflows, show above
+  if (top + th > window.innerHeight - 16) {
+    top = rect.top - th - 8;
+  }
+  // Clamp to viewport
+  if (top < 12) top = 12;
+  if (left + tw > window.innerWidth - 16) left = window.innerWidth - tw - 16;
+  if (left < 16) left = 16;
+
+  tooltip.style.left = `${left}px`;
+  tooltip.style.top = `${top}px`;
+
+  // Trigger animation on next frame
+  requestAnimationFrame(() => tooltip.classList.add('visible'));
+}
+
+function hidePedagogyTooltip() {
+  if (_hoverHideTimer) { clearTimeout(_hoverHideTimer); _hoverHideTimer = null; }
+  if (_hoverTooltipEl) {
+    _hoverTooltipEl.classList.remove('visible');
+    const el = _hoverTooltipEl;
+    setTimeout(() => el.remove(), 200);
+    _hoverTooltipEl = null;
+  }
+}
+
+function attachPedagogyHoverTooltips(container) {
+  container.querySelectorAll('.option-info-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (_hoverHideTimer) { clearTimeout(_hoverHideTimer); _hoverHideTimer = null; }
+      showPedagogyTooltip(btn.dataset.key, btn);
+    });
+    btn.addEventListener('mouseleave', () => {
+      _hoverHideTimer = setTimeout(hidePedagogyTooltip, 150);
+    });
+    // Also support focus for keyboard accessibility
+    btn.addEventListener('focus', (e) => {
+      showPedagogyTooltip(btn.dataset.key, btn);
+    });
+    btn.addEventListener('blur', () => {
+      _hoverHideTimer = setTimeout(hidePedagogyTooltip, 150);
+    });
+    // Prevent click from toggling the parent checkbox/radio
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  });
+}
 
 let teacherCourseId = null;
 let currentStage = 'T1'; // 'T1' | 'T2' | 'INTERVIEW' | 'T3' | 'SUMMARY'
@@ -331,15 +478,8 @@ function renderT1Stage(container, user) {
   attachInfo('lbl-t1-7', 't1', 'Open Aspects of Change', 'Course components you are willing to adapt.');
   attachInfo('lbl-t1-8', 'constraints', 'Instructional Constraints', 'Institutional and environmental barriers affecting delivery.');
 
-  // Attach handlers for individual option info buttons (i)
-  container.querySelectorAll('.option-info-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const key = btn.dataset.key;
-      showExplainerModal(key, '', '', btn);
-    });
-  });
+  // Attach hover tooltips for individual pedagogy option info buttons (i)
+  attachPedagogyHoverTooltips(container);
 
   attachExitButton(container);
   attachRatingChips(container, t1Data);
@@ -465,15 +605,8 @@ function renderT2Stage(container, user) {
   attachInfo('lbl-t2-4', 't2', 'Teacher Satisfaction', 'Your contentment with student understanding and activity.');
   attachInfo('lbl-t2-5', 't2', 'Course Context Fit', 'How well the pedagogy matches course difficulty and prerequisites.');
 
-  // Attach handlers for individual option info buttons (i)
-  container.querySelectorAll('.option-info-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const key = btn.dataset.key;
-      showExplainerModal(key, '', '', btn);
-    });
-  });
+  // Attach hover tooltips for individual pedagogy option info buttons (i)
+  attachPedagogyHoverTooltips(container);
 
   attachExitButton(container);
   attachRatingChips(container, t2Data);
